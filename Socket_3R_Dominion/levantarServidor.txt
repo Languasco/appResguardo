@@ -1,0 +1,15 @@
+abrir puerto firewall Windows Server 2019
+
+---levantar
+node index.js
+
+se tiene que estar en la carpeta del proyecto...
+C:\inetpub\wwwroot
+
+levantar servidor
+pm2 start Socket_Plus/index.js
+
+levantar listar
+pm2 list
+
+pm2 restart Socket_Plus/index.js

@@ -1,0 +1,926 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DSIGE_ResguardoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_Aceesos_Evento">
+          <Key>
+            <PropertyRef Name="id_Acceso_evento" />
+          </Key>
+          <Property Name="id_Acceso_evento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Opcion" Type="int" />
+          <Property Name="id_Usuario" Type="int" />
+          <Property Name="id_Evento" Type="int" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Cargo_Personal">
+          <Key>
+            <PropertyRef Name="id_Cargo" />
+          </Key>
+          <Property Name="id_Cargo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombreCargo" Type="varchar" MaxLength="70" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Definicion_Opciones">
+          <Key>
+            <PropertyRef Name="id_Opcion" />
+          </Key>
+          <Property Name="id_Opcion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_opcion" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="url_opcion" Type="varchar" MaxLength="200" />
+          <Property Name="parentID" Type="int" />
+          <Property Name="nombreParentID" Type="varchar" MaxLength="150" />
+          <Property Name="urlImagen_Opcion" Type="varchar" MaxLength="200" />
+          <Property Name="orden_Opcion" Type="int" />
+          <Property Name="interface_Opcion" Type="int" />
+          <Property Name="TipoInterface" Type="varchar" MaxLength="2" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Distritos">
+          <Key>
+            <PropertyRef Name="id_Distrito" />
+          </Key>
+          <Property Name="id_Distrito" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombreDistrito" Type="varchar" MaxLength="100" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Empresas">
+          <Key>
+            <PropertyRef Name="id_Empresa" />
+          </Key>
+          <Property Name="id_Empresa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ruc_Empresa" Type="varchar" MaxLength="20" />
+          <Property Name="razonSocial_Empresa" Type="varchar" MaxLength="200" />
+          <Property Name="direccion_Empresa" Type="varchar" MaxLength="250" />
+          <Property Name="id_Icono" Type="int" />
+          <Property Name="esProveedor" Type="int" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Estados">
+          <Key>
+            <PropertyRef Name="id_Estado" />
+          </Key>
+          <Property Name="id_Estado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="abreviatura_estado" Type="varchar" MaxLength="50" />
+          <Property Name="descripcion_estado" Type="varchar" MaxLength="150" />
+          <Property Name="tipoproceso_estado" Type="varchar" MaxLength="20" />
+          <Property Name="descripcion_tipoproceso_estado" Type="varchar" MaxLength="150" />
+          <Property Name="id_Modulo" Type="int" />
+          <Property Name="orden_estado" Type="int" />
+          <Property Name="Backcolor_estado" Type="varchar" MaxLength="50" />
+          <Property Name="forecolor_estado" Type="varchar" MaxLength="50" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+          <Property Name="Simbolo_estado" Type="varchar" MaxLength="5" />
+          <Property Name="grupo_Estado" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbl_GrupoTabla_Cab">
+          <Key>
+            <PropertyRef Name="id_GrupoTabla" />
+          </Key>
+          <Property Name="id_GrupoTabla" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion_GrupoTabla" Type="varchar" MaxLength="100" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_GrupoTabla_Det">
+          <Key>
+            <PropertyRef Name="id_detalleTabla" />
+          </Key>
+          <Property Name="id_detalleTabla" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_grupoTabla" Type="int" Nullable="false" />
+          <Property Name="codigo_detalleTabla" Type="varchar" MaxLength="20" />
+          <Property Name="descripcion_grupoTabla" Type="varchar" MaxLength="150" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TBL_Operarios_RegistroGPS">
+          <Key>
+            <PropertyRef Name="ID_Gps" />
+          </Key>
+          <Property Name="ID_Gps" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_operario" Type="int" />
+          <Property Name="GPS_Latitud" Type="varchar" MaxLength="50" />
+          <Property Name="GPS_Longitud" Type="varchar" MaxLength="50" />
+          <Property Name="fecha_GPD" Type="datetime" />
+          <Property Name="fecha_Android" Type="datetime" />
+          <Property Name="fecha_AgregaRegistro" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Parametro_Movil">
+          <Key>
+            <PropertyRef Name="id_Parametro" />
+          </Key>
+          <Property Name="id_Parametro" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_Parametro" Type="varchar" MaxLength="30" />
+          <Property Name="valor_Parametro" Type="int" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_ParteDiario_Cab">
+          <Key>
+            <PropertyRef Name="id_ParteDiario" />
+          </Key>
+          <Property Name="id_ParteDiario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Empresa" Type="int" />
+          <Property Name="id_Servicios" Type="int" />
+          <Property Name="fechaAsignacion_PD" Type="datetime" />
+          <Property Name="fechaRegistro_PD" Type="datetime" />
+          <Property Name="horaInicio_PD" Type="varchar" MaxLength="10" />
+          <Property Name="horaTermino_PD" Type="varchar" MaxLength="10" />
+          <Property Name="totalHoras_PD" Type="varchar" MaxLength="10" />
+          <Property Name="cantidadHoras_PD" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="precio_PD" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="totalSoles_PD" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="id_UsuarioEfectivoPolicial" Type="int" />
+          <Property Name="id_PersonalCoordinar" Type="int" />
+          <Property Name="id_PersonalJefeCuadrilla" Type="int" />
+          <Property Name="lugarTrabajo_PD" Type="varchar" MaxLength="250" />
+          <Property Name="nroObraTD_PD" Type="varchar" MaxLength="20" />
+          <Property Name="observaciones_PD" Type="varchar" MaxLength="250" />
+          <Property Name="latitud_PD" Type="varchar" MaxLength="30" />
+          <Property Name="longitud_PD" Type="varchar" MaxLength="30" />
+          <Property Name="firma_EfectivoPolicial" Type="varchar" MaxLength="100" />
+          <Property Name="firma_JefeCuadrilla" Type="varchar" MaxLength="100" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Perfil">
+          <Key>
+            <PropertyRef Name="id_perfil" />
+          </Key>
+          <Property Name="id_perfil" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion_perfil" Type="varchar" MaxLength="100" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Perfil_Accesos">
+          <Key>
+            <PropertyRef Name="id_Perfil_Acceso" />
+          </Key>
+          <Property Name="id_Perfil_Acceso" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_perfil" Type="int" />
+          <Property Name="id_opcion" Type="int" />
+          <Property Name="id_Evento" Type="int" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="varchar" MaxLength="50" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbl_Personal">
+          <Key>
+            <PropertyRef Name="id_Personal" />
+          </Key>
+          <Property Name="id_Personal" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Empresa" Type="int" />
+          <Property Name="id_TipoDoc" Type="int" />
+          <Property Name="nroDocumento_Personal" Type="varchar" MaxLength="20" />
+          <Property Name="apellidos_Personal" Type="varchar" MaxLength="100" />
+          <Property Name="nombres_Personal" Type="varchar" MaxLength="100" />
+          <Property Name="id_Cargo" Type="int" />
+          <Property Name="direccion_Personal" Type="varchar" MaxLength="250" />
+          <Property Name="id_Distrito" Type="int" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Servicios">
+          <Key>
+            <PropertyRef Name="id_Servicios" />
+          </Key>
+          <Property Name="id_Servicios" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombreServicio" Type="varchar" MaxLength="50" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Usuarios">
+          <Key>
+            <PropertyRef Name="id_Usuario" />
+          </Key>
+          <Property Name="id_Usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Personal" Type="int" />
+          <Property Name="id_EmpresaUsuario" Type="int" />
+          <Property Name="nrodoc_usuario" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="apellidos_usuario" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="nombres_usuario" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="email_usuario" Type="varchar" MaxLength="150" />
+          <Property Name="id_TipoUsuario" Type="int" />
+          <Property Name="id_Perfil" Type="int" Nullable="false" />
+          <Property Name="fotourl" Type="varchar" MaxLength="250" />
+          <Property Name="login_usuario" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="contrasenia_usuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="estado" Type="int" Nullable="false" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__tbl_Acees__id_Op__3C69FB99">
+          <End Role="tbl_Definicion_Opciones" Type="Self.tbl_Definicion_Opciones" Multiplicity="0..1" />
+          <End Role="tbl_Aceesos_Evento" Type="Self.tbl_Aceesos_Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Definicion_Opciones">
+              <PropertyRef Name="id_Opcion" />
+            </Principal>
+            <Dependent Role="tbl_Aceesos_Evento">
+              <PropertyRef Name="id_Opcion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_Acees__id_Us__3E52440B">
+          <End Role="tbl_Usuarios" Type="Self.tbl_Usuarios" Multiplicity="0..1" />
+          <End Role="tbl_Aceesos_Evento" Type="Self.tbl_Aceesos_Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Usuarios">
+              <PropertyRef Name="id_Usuario" />
+            </Principal>
+            <Dependent Role="tbl_Aceesos_Evento">
+              <PropertyRef Name="id_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DSIGE_ResguardoModelStoreContainer">
+          <EntitySet Name="tbl_Aceesos_Evento" EntityType="Self.tbl_Aceesos_Evento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Cargo_Personal" EntityType="Self.tbl_Cargo_Personal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Definicion_Opciones" EntityType="Self.tbl_Definicion_Opciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Distritos" EntityType="Self.tbl_Distritos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Empresas" EntityType="Self.tbl_Empresas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Estados" EntityType="Self.tbl_Estados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_GrupoTabla_Cab" EntityType="Self.tbl_GrupoTabla_Cab" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_GrupoTabla_Det" EntityType="Self.tbl_GrupoTabla_Det" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_Operarios_RegistroGPS" EntityType="Self.TBL_Operarios_RegistroGPS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Parametro_Movil" EntityType="Self.tbl_Parametro_Movil" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_ParteDiario_Cab" EntityType="Self.tbl_ParteDiario_Cab" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Perfil" EntityType="Self.tbl_Perfil" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Perfil_Accesos" EntityType="Self.tbl_Perfil_Accesos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Personal" EntityType="Self.tbl_Personal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Servicios" EntityType="Self.tbl_Servicios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Usuarios" EntityType="Self.tbl_Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__tbl_Acees__id_Op__3C69FB99" Association="Self.FK__tbl_Acees__id_Op__3C69FB99">
+            <End Role="tbl_Definicion_Opciones" EntitySet="tbl_Definicion_Opciones" />
+            <End Role="tbl_Aceesos_Evento" EntitySet="tbl_Aceesos_Evento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_Acees__id_Us__3E52440B" Association="Self.FK__tbl_Acees__id_Us__3E52440B">
+            <End Role="tbl_Usuarios" EntitySet="tbl_Usuarios" />
+            <End Role="tbl_Aceesos_Evento" EntitySet="tbl_Aceesos_Evento" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DSIGE_ResguardoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DSIGE_ResguardoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_Aceesos_Evento" EntityType="DSIGE_ResguardoModel.tbl_Aceesos_Evento" />
+          <EntitySet Name="tbl_Cargo_Personal" EntityType="DSIGE_ResguardoModel.tbl_Cargo_Personal" />
+          <EntitySet Name="tbl_Definicion_Opciones" EntityType="DSIGE_ResguardoModel.tbl_Definicion_Opciones" />
+          <EntitySet Name="tbl_Distritos" EntityType="DSIGE_ResguardoModel.tbl_Distritos" />
+          <EntitySet Name="tbl_Empresas" EntityType="DSIGE_ResguardoModel.tbl_Empresas" />
+          <EntitySet Name="tbl_Estados" EntityType="DSIGE_ResguardoModel.tbl_Estados" />
+          <EntitySet Name="tbl_GrupoTabla_Cab" EntityType="DSIGE_ResguardoModel.tbl_GrupoTabla_Cab" />
+          <EntitySet Name="tbl_GrupoTabla_Det" EntityType="DSIGE_ResguardoModel.tbl_GrupoTabla_Det" />
+          <EntitySet Name="TBL_Operarios_RegistroGPS" EntityType="DSIGE_ResguardoModel.TBL_Operarios_RegistroGPS" />
+          <EntitySet Name="tbl_Parametro_Movil" EntityType="DSIGE_ResguardoModel.tbl_Parametro_Movil" />
+          <EntitySet Name="tbl_ParteDiario_Cab" EntityType="DSIGE_ResguardoModel.tbl_ParteDiario_Cab" />
+          <EntitySet Name="tbl_Perfil" EntityType="DSIGE_ResguardoModel.tbl_Perfil" />
+          <EntitySet Name="tbl_Perfil_Accesos" EntityType="DSIGE_ResguardoModel.tbl_Perfil_Accesos" />
+          <EntitySet Name="tbl_Personal" EntityType="DSIGE_ResguardoModel.tbl_Personal" />
+          <EntitySet Name="tbl_Servicios" EntityType="DSIGE_ResguardoModel.tbl_Servicios" />
+          <EntitySet Name="tbl_Usuarios" EntityType="DSIGE_ResguardoModel.tbl_Usuarios" />
+          <AssociationSet Name="FK__tbl_Acees__id_Op__3C69FB99" Association="DSIGE_ResguardoModel.FK__tbl_Acees__id_Op__3C69FB99">
+            <End Role="tbl_Definicion_Opciones" EntitySet="tbl_Definicion_Opciones" />
+            <End Role="tbl_Aceesos_Evento" EntitySet="tbl_Aceesos_Evento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_Acees__id_Us__3E52440B" Association="DSIGE_ResguardoModel.FK__tbl_Acees__id_Us__3E52440B">
+            <End Role="tbl_Usuarios" EntitySet="tbl_Usuarios" />
+            <End Role="tbl_Aceesos_Evento" EntitySet="tbl_Aceesos_Evento" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tbl_Aceesos_Evento">
+          <Key>
+            <PropertyRef Name="id_Acceso_evento" />
+          </Key>
+          <Property Name="id_Acceso_evento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Opcion" Type="Int32" />
+          <Property Name="id_Usuario" Type="Int32" />
+          <Property Name="id_Evento" Type="Int32" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_Definicion_Opciones" Relationship="DSIGE_ResguardoModel.FK__tbl_Acees__id_Op__3C69FB99" FromRole="tbl_Aceesos_Evento" ToRole="tbl_Definicion_Opciones" />
+          <NavigationProperty Name="tbl_Usuarios" Relationship="DSIGE_ResguardoModel.FK__tbl_Acees__id_Us__3E52440B" FromRole="tbl_Aceesos_Evento" ToRole="tbl_Usuarios" />
+        </EntityType>
+        <EntityType Name="tbl_Cargo_Personal">
+          <Key>
+            <PropertyRef Name="id_Cargo" />
+          </Key>
+          <Property Name="id_Cargo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombreCargo" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_Definicion_Opciones">
+          <Key>
+            <PropertyRef Name="id_Opcion" />
+          </Key>
+          <Property Name="id_Opcion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_opcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="url_opcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="parentID" Type="Int32" />
+          <Property Name="nombreParentID" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="urlImagen_Opcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="orden_Opcion" Type="Int32" />
+          <Property Name="interface_Opcion" Type="Int32" />
+          <Property Name="TipoInterface" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_Aceesos_Evento" Relationship="DSIGE_ResguardoModel.FK__tbl_Acees__id_Op__3C69FB99" FromRole="tbl_Definicion_Opciones" ToRole="tbl_Aceesos_Evento" />
+        </EntityType>
+        <EntityType Name="tbl_Distritos">
+          <Key>
+            <PropertyRef Name="id_Distrito" />
+          </Key>
+          <Property Name="id_Distrito" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombreDistrito" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_Empresas">
+          <Key>
+            <PropertyRef Name="id_Empresa" />
+          </Key>
+          <Property Name="id_Empresa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ruc_Empresa" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="razonSocial_Empresa" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="direccion_Empresa" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="id_Icono" Type="Int32" />
+          <Property Name="esProveedor" Type="Int32" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_Estados">
+          <Key>
+            <PropertyRef Name="id_Estado" />
+          </Key>
+          <Property Name="id_Estado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="abreviatura_estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion_estado" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="tipoproceso_estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion_tipoproceso_estado" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="id_Modulo" Type="Int32" />
+          <Property Name="orden_estado" Type="Int32" />
+          <Property Name="Backcolor_estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="forecolor_estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <Property Name="Simbolo_estado" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="grupo_Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_GrupoTabla_Cab">
+          <Key>
+            <PropertyRef Name="id_GrupoTabla" />
+          </Key>
+          <Property Name="id_GrupoTabla" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion_GrupoTabla" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_GrupoTabla_Det">
+          <Key>
+            <PropertyRef Name="id_detalleTabla" />
+          </Key>
+          <Property Name="id_detalleTabla" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_grupoTabla" Type="Int32" Nullable="false" />
+          <Property Name="codigo_detalleTabla" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion_grupoTabla" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="TBL_Operarios_RegistroGPS">
+          <Key>
+            <PropertyRef Name="ID_Gps" />
+          </Key>
+          <Property Name="ID_Gps" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_operario" Type="Int32" />
+          <Property Name="GPS_Latitud" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GPS_Longitud" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_GPD" Type="DateTime" Precision="3" />
+          <Property Name="fecha_Android" Type="DateTime" Precision="3" />
+          <Property Name="fecha_AgregaRegistro" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_Parametro_Movil">
+          <Key>
+            <PropertyRef Name="id_Parametro" />
+          </Key>
+          <Property Name="id_Parametro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_Parametro" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="valor_Parametro" Type="Int32" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_ParteDiario_Cab">
+          <Key>
+            <PropertyRef Name="id_ParteDiario" />
+          </Key>
+          <Property Name="id_ParteDiario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Empresa" Type="Int32" />
+          <Property Name="id_Servicios" Type="Int32" />
+          <Property Name="fechaAsignacion_PD" Type="DateTime" Precision="3" />
+          <Property Name="fechaRegistro_PD" Type="DateTime" Precision="3" />
+          <Property Name="horaInicio_PD" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="horaTermino_PD" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="totalHoras_PD" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="cantidadHoras_PD" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="precio_PD" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="totalSoles_PD" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="id_UsuarioEfectivoPolicial" Type="Int32" />
+          <Property Name="id_PersonalCoordinar" Type="Int32" />
+          <Property Name="id_PersonalJefeCuadrilla" Type="Int32" />
+          <Property Name="lugarTrabajo_PD" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="nroObraTD_PD" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="observaciones_PD" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="latitud_PD" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="longitud_PD" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="firma_EfectivoPolicial" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="firma_JefeCuadrilla" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_Perfil">
+          <Key>
+            <PropertyRef Name="id_perfil" />
+          </Key>
+          <Property Name="id_perfil" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion_perfil" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_Perfil_Accesos">
+          <Key>
+            <PropertyRef Name="id_Perfil_Acceso" />
+          </Key>
+          <Property Name="id_Perfil_Acceso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_perfil" Type="Int32" />
+          <Property Name="id_opcion" Type="Int32" />
+          <Property Name="id_Evento" Type="Int32" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_Personal">
+          <Key>
+            <PropertyRef Name="id_Personal" />
+          </Key>
+          <Property Name="id_Personal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Empresa" Type="Int32" />
+          <Property Name="id_TipoDoc" Type="Int32" />
+          <Property Name="nroDocumento_Personal" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="apellidos_Personal" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="nombres_Personal" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="id_Cargo" Type="Int32" />
+          <Property Name="direccion_Personal" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="id_Distrito" Type="Int32" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_Servicios">
+          <Key>
+            <PropertyRef Name="id_Servicios" />
+          </Key>
+          <Property Name="id_Servicios" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombreServicio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_Usuarios">
+          <Key>
+            <PropertyRef Name="id_Usuario" />
+          </Key>
+          <Property Name="id_Usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Personal" Type="Int32" />
+          <Property Name="id_EmpresaUsuario" Type="Int32" />
+          <Property Name="nrodoc_usuario" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="apellidos_usuario" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="nombres_usuario" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="email_usuario" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="id_TipoUsuario" Type="Int32" />
+          <Property Name="id_Perfil" Type="Int32" Nullable="false" />
+          <Property Name="fotourl" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="login_usuario" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="contrasenia_usuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_Aceesos_Evento" Relationship="DSIGE_ResguardoModel.FK__tbl_Acees__id_Us__3E52440B" FromRole="tbl_Usuarios" ToRole="tbl_Aceesos_Evento" />
+        </EntityType>
+        <Association Name="FK__tbl_Acees__id_Op__3C69FB99">
+          <End Type="DSIGE_ResguardoModel.tbl_Definicion_Opciones" Role="tbl_Definicion_Opciones" Multiplicity="0..1" />
+          <End Type="DSIGE_ResguardoModel.tbl_Aceesos_Evento" Role="tbl_Aceesos_Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Definicion_Opciones">
+              <PropertyRef Name="id_Opcion" />
+            </Principal>
+            <Dependent Role="tbl_Aceesos_Evento">
+              <PropertyRef Name="id_Opcion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_Acees__id_Us__3E52440B">
+          <End Type="DSIGE_ResguardoModel.tbl_Usuarios" Role="tbl_Usuarios" Multiplicity="0..1" />
+          <End Type="DSIGE_ResguardoModel.tbl_Aceesos_Evento" Role="tbl_Aceesos_Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Usuarios">
+              <PropertyRef Name="id_Usuario" />
+            </Principal>
+            <Dependent Role="tbl_Aceesos_Evento">
+              <PropertyRef Name="id_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DSIGE_ResguardoModelStoreContainer" CdmEntityContainer="DSIGE_ResguardoEntities">
+          <EntitySetMapping Name="tbl_Aceesos_Evento">
+            <EntityTypeMapping TypeName="DSIGE_ResguardoModel.tbl_Aceesos_Evento">
+              <MappingFragment StoreEntitySet="tbl_Aceesos_Evento">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="id_Evento" ColumnName="id_Evento" />
+                <ScalarProperty Name="id_Usuario" ColumnName="id_Usuario" />
+                <ScalarProperty Name="id_Opcion" ColumnName="id_Opcion" />
+                <ScalarProperty Name="id_Acceso_evento" ColumnName="id_Acceso_evento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Cargo_Personal">
+            <EntityTypeMapping TypeName="DSIGE_ResguardoModel.tbl_Cargo_Personal">
+              <MappingFragment StoreEntitySet="tbl_Cargo_Personal">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="nombreCargo" ColumnName="nombreCargo" />
+                <ScalarProperty Name="id_Cargo" ColumnName="id_Cargo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Definicion_Opciones">
+            <EntityTypeMapping TypeName="DSIGE_ResguardoModel.tbl_Definicion_Opciones">
+              <MappingFragment StoreEntitySet="tbl_Definicion_Opciones">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="TipoInterface" ColumnName="TipoInterface" />
+                <ScalarProperty Name="interface_Opcion" ColumnName="interface_Opcion" />
+                <ScalarProperty Name="orden_Opcion" ColumnName="orden_Opcion" />
+                <ScalarProperty Name="urlImagen_Opcion" ColumnName="urlImagen_Opcion" />
+                <ScalarProperty Name="nombreParentID" ColumnName="nombreParentID" />
+                <ScalarProperty Name="parentID" ColumnName="parentID" />
+                <ScalarProperty Name="url_opcion" ColumnName="url_opcion" />
+                <ScalarProperty Name="nombre_opcion" ColumnName="nombre_opcion" />
+                <ScalarProperty Name="id_Opcion" ColumnName="id_Opcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Distritos">
+            <EntityTypeMapping TypeName="DSIGE_ResguardoModel.tbl_Distritos">
+              <MappingFragment StoreEntitySet="tbl_Distritos">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="nombreDistrito" ColumnName="nombreDistrito" />
+                <ScalarProperty Name="id_Distrito" ColumnName="id_Distrito" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Empresas">
+            <EntityTypeMapping TypeName="DSIGE_ResguardoModel.tbl_Empresas">
+              <MappingFragment StoreEntitySet="tbl_Empresas">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="esProveedor" ColumnName="esProveedor" />
+                <ScalarProperty Name="id_Icono" ColumnName="id_Icono" />
+                <ScalarProperty Name="direccion_Empresa" ColumnName="direccion_Empresa" />
+                <ScalarProperty Name="razonSocial_Empresa" ColumnName="razonSocial_Empresa" />
+                <ScalarProperty Name="ruc_Empresa" ColumnName="ruc_Empresa" />
+                <ScalarProperty Name="id_Empresa" ColumnName="id_Empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Estados">
+            <EntityTypeMapping TypeName="DSIGE_ResguardoModel.tbl_Estados">
+              <MappingFragment StoreEntitySet="tbl_Estados">
+                <ScalarProperty Name="grupo_Estado" ColumnName="grupo_Estado" />
+                <ScalarProperty Name="Simbolo_estado" ColumnName="Simbolo_estado" />
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="forecolor_estado" ColumnName="forecolor_estado" />
+                <ScalarProperty Name="Backcolor_estado" ColumnName="Backcolor_estado" />
+                <ScalarProperty Name="orden_estado" ColumnName="orden_estado" />
+                <ScalarProperty Name="id_Modulo" ColumnName="id_Modulo" />
+                <ScalarProperty Name="descripcion_tipoproceso_estado" ColumnName="descripcion_tipoproceso_estado" />
+                <ScalarProperty Name="tipoproceso_estado" ColumnName="tipoproceso_estado" />
+                <ScalarProperty Name="descripcion_estado" ColumnName="descripcion_estado" />
+                <ScalarProperty Name="abreviatura_estado" ColumnName="abreviatura_estado" />
+                <ScalarProperty Name="id_Estado" ColumnName="id_Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_GrupoTabla_Cab">
+            <EntityTypeMapping TypeName="DSIGE_ResguardoModel.tbl_GrupoTabla_Cab">
+              <MappingFragment StoreEntitySet="tbl_GrupoTabla_Cab">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="descripcion_GrupoTabla" ColumnName="descripcion_GrupoTabla" />
+                <ScalarProperty Name="id_GrupoTabla" ColumnName="id_GrupoTabla" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_GrupoTabla_Det">
+            <EntityTypeMapping TypeName="DSIGE_ResguardoModel.tbl_GrupoTabla_Det">
+              <MappingFragment StoreEntitySet="tbl_GrupoTabla_Det">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="descripcion_grupoTabla" ColumnName="descripcion_grupoTabla" />
+                <ScalarProperty Name="codigo_detalleTabla" ColumnName="codigo_detalleTabla" />
+                <ScalarProperty Name="id_grupoTabla" ColumnName="id_grupoTabla" />
+                <ScalarProperty Name="id_detalleTabla" ColumnName="id_detalleTabla" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_Operarios_RegistroGPS">
+            <EntityTypeMapping TypeName="DSIGE_ResguardoModel.TBL_Operarios_RegistroGPS">
+              <MappingFragment StoreEntitySet="TBL_Operarios_RegistroGPS">
+                <ScalarProperty Name="fecha_AgregaRegistro" ColumnName="fecha_AgregaRegistro" />
+                <ScalarProperty Name="fecha_Android" ColumnName="fecha_Android" />
+                <ScalarProperty Name="fecha_GPD" ColumnName="fecha_GPD" />
+                <ScalarProperty Name="GPS_Longitud" ColumnName="GPS_Longitud" />
+                <ScalarProperty Name="GPS_Latitud" ColumnName="GPS_Latitud" />
+                <ScalarProperty Name="id_operario" ColumnName="id_operario" />
+                <ScalarProperty Name="ID_Gps" ColumnName="ID_Gps" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Parametro_Movil">
+            <EntityTypeMapping TypeName="DSIGE_ResguardoModel.tbl_Parametro_Movil">
+              <MappingFragment StoreEntitySet="tbl_Parametro_Movil">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="valor_Parametro" ColumnName="valor_Parametro" />
+                <ScalarProperty Name="nombre_Parametro" ColumnName="nombre_Parametro" />
+                <ScalarProperty Name="id_Parametro" ColumnName="id_Parametro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_ParteDiario_Cab">
+            <EntityTypeMapping TypeName="DSIGE_ResguardoModel.tbl_ParteDiario_Cab">
+              <MappingFragment StoreEntitySet="tbl_ParteDiario_Cab">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="firma_JefeCuadrilla" ColumnName="firma_JefeCuadrilla" />
+                <ScalarProperty Name="firma_EfectivoPolicial" ColumnName="firma_EfectivoPolicial" />
+                <ScalarProperty Name="longitud_PD" ColumnName="longitud_PD" />
+                <ScalarProperty Name="latitud_PD" ColumnName="latitud_PD" />
+                <ScalarProperty Name="observaciones_PD" ColumnName="observaciones_PD" />
+                <ScalarProperty Name="nroObraTD_PD" ColumnName="nroObraTD_PD" />
+                <ScalarProperty Name="lugarTrabajo_PD" ColumnName="lugarTrabajo_PD" />
+                <ScalarProperty Name="id_PersonalJefeCuadrilla" ColumnName="id_PersonalJefeCuadrilla" />
+                <ScalarProperty Name="id_PersonalCoordinar" ColumnName="id_PersonalCoordinar" />
+                <ScalarProperty Name="id_UsuarioEfectivoPolicial" ColumnName="id_UsuarioEfectivoPolicial" />
+                <ScalarProperty Name="totalSoles_PD" ColumnName="totalSoles_PD" />
+                <ScalarProperty Name="precio_PD" ColumnName="precio_PD" />
+                <ScalarProperty Name="cantidadHoras_PD" ColumnName="cantidadHoras_PD" />
+                <ScalarProperty Name="totalHoras_PD" ColumnName="totalHoras_PD" />
+                <ScalarProperty Name="horaTermino_PD" ColumnName="horaTermino_PD" />
+                <ScalarProperty Name="horaInicio_PD" ColumnName="horaInicio_PD" />
+                <ScalarProperty Name="fechaRegistro_PD" ColumnName="fechaRegistro_PD" />
+                <ScalarProperty Name="fechaAsignacion_PD" ColumnName="fechaAsignacion_PD" />
+                <ScalarProperty Name="id_Servicios" ColumnName="id_Servicios" />
+                <ScalarProperty Name="id_Empresa" ColumnName="id_Empresa" />
+                <ScalarProperty Name="id_ParteDiario" ColumnName="id_ParteDiario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Perfil">
+            <EntityTypeMapping TypeName="DSIGE_ResguardoModel.tbl_Perfil">
+              <MappingFragment StoreEntitySet="tbl_Perfil">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="descripcion_perfil" ColumnName="descripcion_perfil" />
+                <ScalarProperty Name="id_perfil" ColumnName="id_perfil" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Perfil_Accesos">
+            <EntityTypeMapping TypeName="DSIGE_ResguardoModel.tbl_Perfil_Accesos">
+              <MappingFragment StoreEntitySet="tbl_Perfil_Accesos">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="id_Evento" ColumnName="id_Evento" />
+                <ScalarProperty Name="id_opcion" ColumnName="id_opcion" />
+                <ScalarProperty Name="id_perfil" ColumnName="id_perfil" />
+                <ScalarProperty Name="id_Perfil_Acceso" ColumnName="id_Perfil_Acceso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Personal">
+            <EntityTypeMapping TypeName="DSIGE_ResguardoModel.tbl_Personal">
+              <MappingFragment StoreEntitySet="tbl_Personal">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="id_Distrito" ColumnName="id_Distrito" />
+                <ScalarProperty Name="direccion_Personal" ColumnName="direccion_Personal" />
+                <ScalarProperty Name="id_Cargo" ColumnName="id_Cargo" />
+                <ScalarProperty Name="nombres_Personal" ColumnName="nombres_Personal" />
+                <ScalarProperty Name="apellidos_Personal" ColumnName="apellidos_Personal" />
+                <ScalarProperty Name="nroDocumento_Personal" ColumnName="nroDocumento_Personal" />
+                <ScalarProperty Name="id_TipoDoc" ColumnName="id_TipoDoc" />
+                <ScalarProperty Name="id_Empresa" ColumnName="id_Empresa" />
+                <ScalarProperty Name="id_Personal" ColumnName="id_Personal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Servicios">
+            <EntityTypeMapping TypeName="DSIGE_ResguardoModel.tbl_Servicios">
+              <MappingFragment StoreEntitySet="tbl_Servicios">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="nombreServicio" ColumnName="nombreServicio" />
+                <ScalarProperty Name="id_Servicios" ColumnName="id_Servicios" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Usuarios">
+            <EntityTypeMapping TypeName="DSIGE_ResguardoModel.tbl_Usuarios">
+              <MappingFragment StoreEntitySet="tbl_Usuarios">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="contrasenia_usuario" ColumnName="contrasenia_usuario" />
+                <ScalarProperty Name="login_usuario" ColumnName="login_usuario" />
+                <ScalarProperty Name="fotourl" ColumnName="fotourl" />
+                <ScalarProperty Name="id_Perfil" ColumnName="id_Perfil" />
+                <ScalarProperty Name="id_TipoUsuario" ColumnName="id_TipoUsuario" />
+                <ScalarProperty Name="email_usuario" ColumnName="email_usuario" />
+                <ScalarProperty Name="nombres_usuario" ColumnName="nombres_usuario" />
+                <ScalarProperty Name="apellidos_usuario" ColumnName="apellidos_usuario" />
+                <ScalarProperty Name="nrodoc_usuario" ColumnName="nrodoc_usuario" />
+                <ScalarProperty Name="id_EmpresaUsuario" ColumnName="id_EmpresaUsuario" />
+                <ScalarProperty Name="id_Personal" ColumnName="id_Personal" />
+                <ScalarProperty Name="id_Usuario" ColumnName="id_Usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
