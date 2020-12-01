@@ -2,12 +2,16 @@
 
 <!-- <nav class="navbar navbar-dark bg-white navbar-expand-md   sticky-top" *ngIf="showMenu"> -->
 
-<nav class="navbar navbar-dark bg-primary navbar-expand-md   sticky-top" *ngIf="showMenu">
-    <a class="navbar-brand" [routerLink]="['/']">
-        <!-- <img src="./assets/img/logoDominion.jpeg" style="width:138px; height: 30px;" class="card-img-top " alt="..."> -->
-        RESGUARDO
+<nav class="navbar navbar-dark bg-success navbar-expand-md   sticky-top" *ngIf="showMenu">
+    <!-- <a class="navbar-brand" [routerLink]="['/']" >
+        <img src="./assets/img/logoDominion.jpeg" style="width:138px; height: 30px;" class="card-img-top " alt="...">
+    </a> -->
+
+    <a class="navbar-brand " style=" cursor: pointer; font-family: 'Montserrat', sans-serif !important; font-weight: 700;" [routerLink]="['/']">
+        <i class="fas fa-house-user fa-1x"></i> RESGUARDO
     </a>
-    <button class="navbar-toggler bg-dark" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <button class="navbar-toggler bg-success" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -29,11 +33,14 @@
                  {{nameUser}}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <div class="text-center">
-                        <button class="btn btn-outline-primary btn-sm my-2 my-sm-0 " type="button" (click)="cerrarSesion()">  Cerrar Sesion</button>
-                    </div>
+
+                    <a class="dropdown-item" href="#" (click)="cerrarSesion()">
+                        <i class="fas fa-sign-out-alt "></i> Cerrar Sesion
+                    </a>
+
                 </div>
             </div>
         </form>
+
     </div>
 </nav>

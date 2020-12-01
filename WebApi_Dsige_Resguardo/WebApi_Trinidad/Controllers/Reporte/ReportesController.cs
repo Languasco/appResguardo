@@ -23,14 +23,11 @@ namespace WebApi_dsigeResguardo.Controllers.Reporte
                 if (opcion == 1)
                 {
                     string[] parametros = filtro.Split('|');
-                    int idServicio = Convert.ToInt32(parametros[0].ToString());
-                    string fechaGps = parametros[1].ToString();
-                    int idTipoOT = Convert.ToInt32(parametros[2].ToString());
-                    int idProveedor = Convert.ToInt32(parametros[3].ToString()); 
-                    int idUsuario = Convert.ToInt32(parametros[4].ToString());
-                    
+                    string fechaGps = parametros[0].ToString();
+                    int idUsuario = Convert.ToInt32(parametros[1].ToString());
+
                     res.ok = true;
-                    res.data = obj_negocio.get_ubicacionesPorPersonal(idServicio, fechaGps, idTipoOT, idProveedor, idUsuario);
+                    res.data = obj_negocio.get_ubicacionesPorPersonal(fechaGps, idUsuario);
                     res.totalpage = 0;
 
                     resul = res;
@@ -86,7 +83,7 @@ namespace WebApi_dsigeResguardo.Controllers.Reporte
 
                     int idServicio = Convert.ToInt32(parametros[0].ToString());
                     int idTipoOT = Convert.ToInt32(parametros[1].ToString());
-                    int idProveedor = Convert.ToInt32(parametros[2].ToString()); 
+                    int idProveedor = Convert.ToInt32(parametros[2].ToString());
                     int idUsuario = Convert.ToInt32(parametros[3].ToString());
 
                     resul = obj_negocio.get_fueraPlazoOT(idServicio, idTipoOT, idProveedor, idUsuario);
@@ -127,7 +124,7 @@ namespace WebApi_dsigeResguardo.Controllers.Reporte
                     string fechaIni = parametros[1].ToString();
                     string fechaFin = parametros[2].ToString();
 
-                    resul = obj_negocio.get_tareoCab(idServicio,fechaIni, fechaFin);
+                    resul = obj_negocio.get_tareoCab(idServicio, fechaIni, fechaFin);
                 }
                 else if (opcion == 9)
                 {
@@ -140,6 +137,74 @@ namespace WebApi_dsigeResguardo.Controllers.Reporte
 
                     resul = obj_negocio.get_descargarTareoCab(idServicio, fechaIni, fechaFin, idUsuario);
                 }
+                ///---- aprobacion de tareo
+                else if (opcion == 10)
+                {
+                    string[] parametros = filtro.Split('|');
+
+                    int idServicio = Convert.ToInt32(parametros[0].ToString());
+                    string fechaIni = parametros[1].ToString();
+                    string fechaFin = parametros[2].ToString();
+
+                    resul = obj_negocio.get_tareoCab_aprobacion(idServicio, fechaIni, fechaFin);
+                }
+                else if (opcion == 11)
+                {
+                    string[] parametros = filtro.Split('|');
+
+                    int id_ParteDiario = Convert.ToInt32(parametros[0].ToString());
+                    string opcionEstado = parametros[1].ToString();
+                    int idUsuario = Convert.ToInt32(parametros[2].ToString());
+
+
+                    resul = obj_negocio.set_aprobarRechazarTareo(id_ParteDiario, opcionEstado, idUsuario);
+                }
+                else if (opcion == 12)
+                {
+                    string[] parametros = filtro.Split('|');
+
+                    string id_ParteDiario_masivo = parametros[0].ToString();
+                    string opcionEstado = parametros[1].ToString();
+                    int idUsuario = Convert.ToInt32(parametros[2].ToString());
+
+
+                    resul = obj_negocio.set_aprobarRechazarTareo_masivo(id_ParteDiario_masivo, opcionEstado, idUsuario);
+                }
+
+                else if (opcion == 13)
+                {
+                    string[] parametros = filtro.Split('|');
+
+                    int id_ParteDiario = Convert.ToInt32(parametros[0].ToString());
+                    int idUsuario = Convert.ToInt32(parametros[1].ToString());
+
+                    res.ok = true;
+                    res.data = obj_negocio.get_fotosTareos(id_ParteDiario, idUsuario);
+                    res.totalpage = 0;
+
+                    resul = res;
+                }
+                else if (opcion == 14)
+                {
+                    string[] parametros = filtro.Split('|');
+
+                    int id_parteDiario_foto = Convert.ToInt32(parametros[0].ToString());
+                    int idUsuario = Convert.ToInt32(parametros[1].ToString());
+                     
+                    resul = obj_negocio.set_eliminarParteDiarioFotos(id_parteDiario_foto);
+                }
+                else if (opcion == 15)
+                {
+                    string[] parametros = filtro.Split('|');
+                    int idParteDiario = Convert.ToInt32(parametros[0].ToString());
+                    int idUsuario = Convert.ToInt32(parametros[1].ToString());
+
+                    res.ok = true;
+                    res.data = obj_negocio.get_descargar_fotosParteDiario(idParteDiario,idUsuario);
+                    res.totalpage = 0;
+                    resul = res;
+                }
+
                 else
                 {
                     res.ok = false;

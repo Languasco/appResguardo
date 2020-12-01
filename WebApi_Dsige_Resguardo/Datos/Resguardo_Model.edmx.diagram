@@ -20,9 +20,13 @@
         <EntityTypeShape EntityType="DSIGE_ResguardoModel.tbl_Perfil_Accesos" Width="1.5" PointX="11.75" PointY="0.75" />
         <EntityTypeShape EntityType="DSIGE_ResguardoModel.tbl_Personal" Width="1.5" PointX="11.75" PointY="4.75" />
         <EntityTypeShape EntityType="DSIGE_ResguardoModel.tbl_Servicios" Width="1.5" PointX="11.75" PointY="9.75" />
+        <EntityTypeShape EntityType="DSIGE_ResguardoModel.tbl_Solicitud_Det" Width="1.5" PointX="8.75" PointY="12.75" />
         <EntityTypeShape EntityType="DSIGE_ResguardoModel.tbl_Usuarios" Width="1.5" PointX="0.75" PointY="8.25" />
         <AssociationConnector Association="DSIGE_ResguardoModel.FK__tbl_Acees__id_Op__3C69FB99" />
         <AssociationConnector Association="DSIGE_ResguardoModel.FK__tbl_Acees__id_Us__3E52440B" />
+        <EntityTypeShape EntityType="DSIGE_ResguardoModel.tbl_Usuarios_Servicios" Width="1.5" PointX="11.375" PointY="13.75" />
+        <EntityTypeShape EntityType="DSIGE_ResguardoModel.tbl_Solicitud_Cab" Width="1.5" PointX="3.375" PointY="12.75" />
+        <EntityTypeShape EntityType="DSIGE_ResguardoModel.tbl_ParteDiario_Foto" Width="1.5" PointX="0.75" PointY="13.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

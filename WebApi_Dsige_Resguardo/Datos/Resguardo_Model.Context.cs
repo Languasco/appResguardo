@@ -40,6 +40,10 @@ namespace Datos
         public virtual DbSet<tbl_Perfil_Accesos> tbl_Perfil_Accesos { get; set; }
         public virtual DbSet<tbl_Personal> tbl_Personal { get; set; }
         public virtual DbSet<tbl_Servicios> tbl_Servicios { get; set; }
+        public virtual DbSet<tbl_Solicitud_Det> tbl_Solicitud_Det { get; set; }
         public virtual DbSet<tbl_Usuarios> tbl_Usuarios { get; set; }
+        public virtual DbSet<tbl_Usuarios_Servicios> tbl_Usuarios_Servicios { get; set; }
+        public virtual DbSet<tbl_Solicitud_Cab> tbl_Solicitud_Cab { get; set; }
+        public virtual DbSet<tbl_ParteDiario_Foto> tbl_ParteDiario_Foto { get; set; }
     }
 }

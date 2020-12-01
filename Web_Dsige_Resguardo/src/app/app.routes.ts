@@ -17,6 +17,10 @@ import { AccesosComponent } from './pages/Accesos/accesos/accesos.component';
 import { CargoPersonalComponent } from './pages/Mantenimientos/cargo-personal/cargo-personal.component';
 import { AreasComponent } from './pages/Mantenimientos/areas/areas.component';
 import { TareoComponent } from './pages/Reportes/tareo/tareo.component';
+import { SolicitudResguardoComponent } from './pages/Procesos/solicitud-resguardo/solicitud-resguardo.component';
+import { BandejaAsignacionComponent } from './pages/Procesos/bandeja-asignacion/bandeja-asignacion.component';
+import { AprobarTareoComponent } from './pages/Procesos/aprobar-tareo/aprobar-tareo.component';
+import { BandejaAsignacionMasivoComponent } from './pages/Procesos/bandeja-asignacion-masivo/bandeja-asignacion-masivo.component';
  
  
 const APP_ROUTERS: Routes = [
@@ -27,7 +31,6 @@ const APP_ROUTERS: Routes = [
     { path: 'mantenimiento-usuarios', component: UsuariosComponent},  
     { path: 'mantenimiento-distritos', component: DistritosComponent},  
     { path: 'mantenimiento-lista-precios', component: ListaPreciosComponent},  
-
 
     { path: 'proceso-orden-trabajo', component: OrdenTrabajoComponent},  
     { path: 'proceso-aprobacion-orden-trabajo', component: AprobacionOTComponent},  
@@ -44,6 +47,12 @@ const APP_ROUTERS: Routes = [
     { path: 'mantenimiento-servicio', component: AreasComponent},  
 
     { path: 'reporte-tareo', component: TareoComponent},  
+    { path: 'procesos-solicitud-resguardo', component: SolicitudResguardoComponent  },  
+    { path: 'procesos-bandeja-asignacion', component: BandejaAsignacionComponent  },  
+    { path: 'proceso-aprobacion-tareo', component: AprobarTareoComponent},  
+
+    { path: 'procesos-bandeja-asignacion-masivo', component: BandejaAsignacionMasivoComponent  },  
+    
 
     { path: '', pathMatch:'full', redirectTo:'inicio' },
     { path: '**', pathMatch:'full', redirectTo:'inicio' },

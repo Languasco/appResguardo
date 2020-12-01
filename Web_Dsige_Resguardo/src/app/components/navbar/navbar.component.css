@@ -12,7 +12,7 @@
 }
 
 .dropdown-toggle {
-    color: #0d3baf !important;
+    color: white !important;
     border-color: white;
 }
 
@@ -59,12 +59,16 @@
 }
 
 .dropdown-item {
-    color: #0047ba !important;
+    color: #186A3B !important;
     font-size: 13px;
     font-weight: 600;
 }
 
 .dropdown-item:hover {
-    background-color: #007bff !important;
+    background-color: #186A3B !important;
     color: white !important;
+}
+
+.bg-success {
+    background-color: #186A3B !important;
 }

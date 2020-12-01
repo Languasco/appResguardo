@@ -68,7 +68,7 @@ export class AccesosComponent implements OnInit {
     this.selectedTabControlDetalle = this.tabControlDetalle[0];
    this.inicializarFormulario();
    //----carga basica ----
-   const menu = { text: 'SISTEMA 3R DOMINION', value: -1, children: []}
+   const menu = { text: 'SISTEMA RESGUADO', value: -1, children: []}
    this.accesosMenu = this.getAccesos(menu);  
   //  //---- menu real
      this.mostrarAccesosMenu();

@@ -46,7 +46,6 @@ export class UbicacionPersonalComponent implements OnInit,AfterViewInit {
   }
  
  ngOnInit(): void {
-  this.getCargarCombos();
   this.inicializarFormularioFiltro();
  }
 
@@ -56,29 +55,12 @@ export class UbicacionPersonalComponent implements OnInit,AfterViewInit {
 
  inicializarFormularioFiltro(){ 
     this.formParamsFiltro= new FormGroup({
-      fechaGps : new FormControl(new Date()),
-      idServicio : new FormControl('0'),
-      idTipoOT : new FormControl('0'), 
-      idProveedor : new FormControl('0') 
+      fechaGps : new FormControl(new Date())
      }) 
  }
 
- getCargarCombos(){ 
-    this.spinner.show();
-    combineLatest([this.ordenTrabajoService.get_servicio(this.idUserGlobal), this.listaPreciosService.get_tipoOrdenTrabajo(), this.ordenTrabajoService.get_Proveedor() ]).subscribe( ([ _servicios, _tipoOrdenTrabajo, _proveedor ])=>{
-        this.servicios = _servicios;
-        this.tipoOrdenTrabajo = _tipoOrdenTrabajo;  
-        this.proveedor = _proveedor;  
-      this.spinner.hide(); 
-    },(error)=>{
-      this.spinner.hide(); 
-      alert(error);
-    })
-
- }
 
  InicializarMapa() {
-
   const latLng = new google.maps.LatLng(-12.046374, -77.0427934 );
   const  mapaOption : google.maps.MapOptions = {
     center : latLng,
@@ -89,32 +71,19 @@ export class UbicacionPersonalComponent implements OnInit,AfterViewInit {
  };
 
  mostrarInformacionMapa(){
-      if (this.formParamsFiltro.value.idServicio == '' || this.formParamsFiltro.value.idServicio == 0) {
-        this.alertasService.Swal_alert('error','Por favor seleccione el servicio');
-        return 
-      }
       if (this.formParamsFiltro.value.fechaGps == '' || this.formParamsFiltro.value.fechaGps == null) {
         this.alertasService.Swal_alert('error','Por favor seleccione la fecha Gps');
         return 
       }       
-      if (this.formParamsFiltro.value.idTipoOT == '' || this.formParamsFiltro.value.idTipoOT == 0) {
-        this.alertasService.Swal_alert('error','Por favor seleccione el Tipo de Orden Trabajo');
-        return 
-      } 
-      // if (this.formParamsFiltro.value.idProveedor == '' || this.formParamsFiltro.value.idProveedor == 0) {
-      //   this.alertasService.Swal_alert('error','Por favor seleccione un Proveedor');
-      //   return 
-      // }
 
       const fechaFormato = this.funcionGlobalServices.formatoFecha(this.formParamsFiltro.value.fechaGps); 
       this.spinner.show();
-      this.ubicacionPersonalService.get_mostrar_ubicacionesPersonal(this.formParamsFiltro.value,fechaFormato,  this.idUserGlobal)
+      this.ubicacionPersonalService.get_mostrar_ubicacionesPersonal(fechaFormato,  this.idUserGlobal)
           .subscribe((res:RespuestaServer)=>{            
-              this.spinner.hide();
-   
+              this.spinner.hide();   
               if (res.ok==true) {     
                   if(res.data.length > 0){
-                    this.MostrarUbicacionesMap( res.data);
+                    this.MostrarUbicacionesMap( res.data );
                   }else{
                     this.alertasService.Swal_alert('info','No hay información para disponible para mostrar');
                     this.RemoveMarker(null);
@@ -130,27 +99,31 @@ export class UbicacionPersonalComponent implements OnInit,AfterViewInit {
  MostrarUbicacionesMap(obj_Lista:any) {
    this.RemoveMarker(null);
    this.markers = [];
+
+   //----enfocando el mapa al primer registro +-----
+   const latLng = new google.maps.LatLng(Number(obj_Lista[0].latitud), Number(obj_Lista[0].longitud) );
+   google.maps.event.trigger(this.map, "resize");
+   this.map.setCenter(latLng);
+   //----Fin de enfocando el mapa al primer registro +-----
  
   for (const ubicaciones of obj_Lista) {
     this.createMarker(ubicaciones);
   }
  }
 
- createMarker({icono, razonSocial_Empresa, JefeCuadrilla, latitud, longitud, Asignado, Realizado, Pendiente}) {
+ createMarker({ latitud, longitud, efectivoPolicial, fechaHora }) {
 
   let ContenidoMarker = '';
   ContenidoMarker += '<div style="width:550px;position:relative;">';
-  ContenidoMarker += '<table><tr><td class="text-info" >Empresa</td><td><b>  '+ razonSocial_Empresa +'</b></td></tr>';
-  ContenidoMarker += '<tr><td class="text-info"><strong>Personal</strong></td><td> ' + JefeCuadrilla + '</td></tr>';
-  ContenidoMarker += '<tr><td class="text-info"><strong>Cant OT Asignadas</strong></td><td>  ' + Asignado + '</td></tr>';
-  ContenidoMarker += '<tr><td class="text-info"><strong>Cant OT Realizadas</strong></td><td> ' + Realizado + '</td></tr>';
-  ContenidoMarker += '<tr><td class="text-info"><strong>Cant OT Pendiente</strong></td><td> ' + Pendiente + ' </td></tr> </table>'; 
+  ContenidoMarker += '<table><tr><td class="text-info" >Nombre Efectivo :</td><td><b>  '+ efectivoPolicial +'</b></td></tr>';
+  ContenidoMarker += '<tr><td class="text-info"><strong>Fecha Hora :</strong></td><td> ' + fechaHora + '</td></tr>';
+  ContenidoMarker += '</table>'; 
 
   const marker = new google.maps.Marker({
         map: this.map,
         position: new google.maps.LatLng( Number(latitud), Number(longitud)),
         title: 'UBICACIÓN DE PERSONAL',
-        icon: icono
+        icon: './assets/img/mapa/policia.png'
   }); 
 
   this.markers.push(marker); 
@@ -190,10 +163,6 @@ export class UbicacionPersonalComponent implements OnInit,AfterViewInit {
         this.alertasService.Swal_alert('error','Por favor seleccione el Tipo de Orden Trabajo');
         return 
       } 
-      // if (this.formParamsFiltro.value.idProveedor == '' || this.formParamsFiltro.value.idProveedor == 0) {
-      //   this.alertasService.Swal_alert('error','Por favor seleccione un Proveedor');
-      //   return 
-      // }
       const fechaFormato = this.funcionGlobalServices.formatoFecha(this.formParamsFiltro.value.fechaGps); 
     
       this.spinner.show();

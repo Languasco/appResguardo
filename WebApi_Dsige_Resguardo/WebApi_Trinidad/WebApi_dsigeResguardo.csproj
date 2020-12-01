@@ -211,6 +211,8 @@
     <Compile Include="Controllers\Mantenimiento\tblUsuariosController.cs" />
     <Compile Include="Controllers\Proceso\AprobarOTController.cs" />
     <Compile Include="Controllers\Proceso\OrdenTrabajoController.cs" />
+    <Compile Include="Controllers\Proceso\tblSolicitud_CabController.cs" />
+    <Compile Include="Controllers\Proceso\tblSolicitud_DetController.cs" />
     <Compile Include="Controllers\Reporte\ReportesController.cs" />
     <Compile Include="Controllers\upload\UploadsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />

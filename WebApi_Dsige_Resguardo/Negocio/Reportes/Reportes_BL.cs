@@ -10,6 +10,7 @@ using System.Drawing;
 using System.IO;
  
 using System.Threading;
+using System.Web;
 using Excel = OfficeOpenXml;
 using Style = OfficeOpenXml.Style;
 
@@ -18,7 +19,7 @@ namespace Negocio.Reportes
 {
     public class Reportes_BL
     {
-        public DataTable get_ubicacionesPorPersonal( int idServicio, string fechaGps, int idTipoOT, int  idProveedor, int idUsuario)
+        public DataTable get_ubicacionesPorPersonal( string fechaGps, int idUsuario)
         {
             DataTable dt_detalle = new DataTable();
             try
@@ -26,15 +27,11 @@ namespace Negocio.Reportes
                 using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
                 {
                     cn.Open();
-                    using (SqlCommand cmd = new SqlCommand("DSIGE_PROY_W_Reporte_Ubicacion_Personal", cn))
+                    using (SqlCommand cmd = new SqlCommand("DSIGE_PROY_W_REPORTE_UBICACION_PERSONAL", cn))
                     {
                         cmd.CommandTimeout = 0;
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@Fecha", SqlDbType.VarChar).Value = fechaGps;
-                        cmd.Parameters.Add("@Servicio", SqlDbType.Int).Value = idServicio;
-                        cmd.Parameters.Add("@TipoOrden", SqlDbType.Int).Value = idTipoOT;
-                        cmd.Parameters.Add("@Proveedor", SqlDbType.Int).Value = idProveedor;
-                        cmd.Parameters.Add("@TipoRepor", SqlDbType.VarChar).Value = "W";
 
                         using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                         {
@@ -713,6 +710,8 @@ namespace Negocio.Reportes
                             {
                                 Tareo_E Entidad = new Tareo_E();
 
+                                
+                                Entidad.id_ParteDiario = dr["id_ParteDiario"].ToString();
                                 Entidad.dia = dr["dia"].ToString();
                                 Entidad.personal = dr["personal"].ToString();
                                 Entidad.jefeCuadrilla = dr["jefeCuadrilla"].ToString();
@@ -721,9 +720,23 @@ namespace Negocio.Reportes
 
                                 Entidad.horaInicio = dr["horaInicio"].ToString();
                                 Entidad.horaTermino = dr["horaTermino"].ToString();
+                                Entidad.totalTiempo = dr["totalTiempo"].ToString();                              
+
+
                                 Entidad.totalHoras = dr["totalHoras"].ToString();
                                 Entidad.precio = dr["precio"].ToString();
                                 Entidad.totalSoles = dr["totalSoles"].ToString();
+
+                                Entidad.areaReporte = dr["areaReporte"].ToString();
+                                Entidad.fechaReporte = dr["fechaReporte"].ToString();
+                                Entidad.coordinadorReporte = dr["coordinadorReporte"].ToString();
+                                Entidad.efectivoPolicialReporte = dr["efectivoPolicialReporte"].ToString();
+
+                                Entidad.lugarTrabajoReporte = dr["lugarTrabajoReporte"].ToString();
+                                Entidad.observacionReporte = dr["observacionReporte"].ToString();
+                                Entidad.urlFirmaEfectivoReporte = dr["urlFirmaEfectivoReporte"].ToString();
+                                Entidad.urlFirmaJefeCuadrillaReporte = dr["urlFirmaJefeCuadrillaReporte"].ToString();
+                                Entidad.descripcionEstado = dr["descripcionEstado"].ToString();
 
                                 obj_List.Add(Entidad);
                             }
@@ -778,6 +791,7 @@ namespace Negocio.Reportes
                                 Entidad.totalHoras = dr["totalHoras"].ToString();
                                 Entidad.precio = dr["precio"].ToString();
                                 Entidad.totalSoles = dr["totalSoles"].ToString();
+                                Entidad.descripcionEstado = dr["descripcionEstado"].ToString();
 
                                 obj_List.Add(Entidad);
                             }
@@ -878,6 +892,7 @@ namespace Negocio.Reportes
                     oWs.Cells[6, 9].Value = "TOTAL HORAS";
                     oWs.Cells[6, 10].Value = "PRECIO";
                     oWs.Cells[6, 11].Value = "TOTAL SOLES";
+                    oWs.Cells[6, 12].Value = "ESTADO";
 
                     int cont = 0;
                     foreach (var item in listDetalle)
@@ -892,14 +907,20 @@ namespace Negocio.Reportes
                         oWs.Cells[_fila, 6].Value = item.nroOrden.ToString();
                         oWs.Cells[_fila, 7].Value = item.horaInicio.ToString();
                         oWs.Cells[_fila, 8].Value = item.horaTermino.ToString();
-                        oWs.Cells[_fila, 9].Value = item.totalHoras.ToString();
+                                               
+                        oWs.Cells[_fila, 9].Style.Numberformat.Format = "#,##0.00";
+                        oWs.Cells[_fila, 9].Value = Convert.ToDouble(item.totalHoras.ToString());   
                         oWs.Cells[_fila, 9].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Right;
 
-                        oWs.Cells[_fila, 10].Value = item.precio.ToString();
+                        oWs.Cells[_fila, 10].Style.Numberformat.Format = "#,##0.00";
+                        oWs.Cells[_fila, 10].Value = Convert.ToDouble(item.precio.ToString());   
                         oWs.Cells[_fila, 10].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Right;
-
-                        oWs.Cells[_fila, 11].Value = item.totalSoles.ToString();
+                        
+                        oWs.Cells[_fila, 11].Style.Numberformat.Format = "#,##0.00";
+                        oWs.Cells[_fila, 11].Value = Convert.ToDouble(item.totalSoles.ToString());
                         oWs.Cells[_fila, 11].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Right;
+
+                        oWs.Cells[_fila, 12].Value = item.descripcionEstado.ToString();
                         _fila++;
                     }
 
@@ -925,6 +946,316 @@ namespace Negocio.Reportes
                 throw;
             }
             return Res;
+        }
+
+        public object get_tareoCab_aprobacion(int idServicio, string fechaIni, string fechaFin)
+        {
+            Resultado res = new Resultado();
+            List<Tareo_E> obj_List = new List<Tareo_E>();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("DSIGE_PROY_W_APROBAR_TAREO_CAB", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idServicio", SqlDbType.Int).Value = idServicio;
+                        cmd.Parameters.Add("@FecIni", SqlDbType.VarChar).Value = fechaIni;
+                        cmd.Parameters.Add("@FecFin", SqlDbType.VarChar).Value = fechaFin;
+
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                Tareo_E Entidad = new Tareo_E();
+
+                                Entidad.checkeado = false;
+                               Entidad.id_ParteDiario = dr["id_ParteDiario"].ToString();
+                                Entidad.dia = dr["dia"].ToString();
+                                Entidad.personal = dr["personal"].ToString();
+                                Entidad.jefeCuadrilla = dr["jefeCuadrilla"].ToString();
+                                Entidad.direccion = dr["direccion"].ToString();
+                                Entidad.nroOrden = dr["nroOrden"].ToString();
+
+                                Entidad.horaInicio = dr["horaInicio"].ToString();
+                                Entidad.horaTermino = dr["horaTermino"].ToString();
+                                Entidad.totalTiempo = dr["totalTiempo"].ToString();
+
+
+                                Entidad.totalHoras = dr["totalHoras"].ToString();
+                                Entidad.precio = dr["precio"].ToString();
+                                Entidad.totalSoles = dr["totalSoles"].ToString();
+
+                                Entidad.areaReporte = dr["areaReporte"].ToString();
+                                Entidad.fechaReporte = dr["fechaReporte"].ToString();
+                                Entidad.coordinadorReporte = dr["coordinadorReporte"].ToString();
+                                Entidad.efectivoPolicialReporte = dr["efectivoPolicialReporte"].ToString();
+
+                                Entidad.lugarTrabajoReporte = dr["lugarTrabajoReporte"].ToString();
+                                Entidad.observacionReporte = dr["observacionReporte"].ToString();
+                                Entidad.urlFirmaEfectivoReporte = dr["urlFirmaEfectivoReporte"].ToString();
+                                Entidad.urlFirmaJefeCuadrillaReporte = dr["urlFirmaJefeCuadrillaReporte"].ToString();
+                                Entidad.idEstado = dr["idEstado"].ToString();
+                                
+
+
+                                obj_List.Add(Entidad);
+                            }
+
+                            res.ok = true;
+                            res.data = obj_List;
+                            res.totalpage = 0;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+                res.totalpage = 0;
+            }
+            return res;
+        }
+        
+        public object set_aprobarRechazarTareo(int id_ParteDiario, string opcionEstado, int idUsuario)
+        {
+            Resultado res = new Resultado();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("DSIGE_PROY_W_APROBAR_TAREO_APROBAR_RECHAZAR", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_ParteDiario", SqlDbType.Int).Value = id_ParteDiario;
+                        cmd.Parameters.Add("@opcionEstado", SqlDbType.VarChar).Value = opcionEstado;
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+                        cmd.ExecuteNonQuery();
+
+                        res.ok = true;
+                        res.data = "OK";
+                        res.totalpage = 0;
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+               
+        public object set_aprobarRechazarTareo_masivo(string id_ParteDiario_masivo, string opcionEstado, int idUsuario)
+        {
+            Resultado res = new Resultado();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("DSIGE_PROY_W_APROBAR_TAREO_APROBAR_RECHAZAR_MASIVO", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idParteDiario_masivo", SqlDbType.VarChar).Value = id_ParteDiario_masivo;
+                        cmd.Parameters.Add("@opcionEstado", SqlDbType.VarChar).Value = opcionEstado;
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+                        cmd.ExecuteNonQuery();
+
+                        res.ok = true;
+                        res.data = "OK";
+                        res.totalpage = 0;
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+
+        public DataTable get_fotosTareos(int id_ParteDiario, int idUsuario)
+        {
+            DataTable dt_detalle = new DataTable();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("DSIGE_PROY_W_APROBAR_TAREO_FOTOS", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_ParteDiario", SqlDbType.Int).Value = id_ParteDiario;
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return dt_detalle;
+        }
+               
+        public object set_eliminarParteDiarioFotos(int id_parteDiario_foto)
+        {
+            Resultado res = new Resultado();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("DSIGE_PROY_W_APROBAR_TAREO_BORRAR_FOTO", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_parteDiario_foto", SqlDbType.Int).Value = id_parteDiario_foto;
+                        cmd.ExecuteNonQuery();
+
+                        res.ok = true;
+                        res.data = "OK";
+                        res.totalpage = 0;
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+        public class download
+        {
+            public string nombreFile { get; set; }
+            public string nombreBd { get; set; }
+            public string ubicacion { get; set; }
+        }
+
+
+        public string get_descargar_fotosParteDiario(int idParteDiario,   int idUsuario)
+        {
+            DataTable dt_detalle = new DataTable();
+            List<download> list_files = new List<download>();
+            string pathfile = "";
+            string ruta_descarga = "";
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("DSIGE_PROY_W_APROBAR_TAREO_DESCARGAR_FOTOS", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idParteDiario", SqlDbType.Int).Value = idParteDiario;
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                            pathfile = HttpContext.Current.Server.MapPath("~/Archivos/Fotos/");
+
+                            foreach (DataRow Fila in dt_detalle.Rows)
+                            {
+                                download obj_entidad = new download();
+                                obj_entidad.nombreFile = Fila["nombreArchivo"].ToString();
+                                obj_entidad.ubicacion = pathfile;
+                                list_files.Add(obj_entidad);
+                            }
+
+                            if (list_files.Count > 0)
+                            {
+                                if (list_files.Count == 1)
+                                {
+                                    ruta_descarga = ConfigurationManager.AppSettings["Archivos"] + "Fotos/" + list_files[0].nombreFile;
+                                }
+                                else
+                                {
+                                    ruta_descarga = comprimir_Files(list_files, idUsuario);
+                                }
+                            }
+                            else
+                            {
+                                throw new System.InvalidOperationException("No hay archivo para Descargar");
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return ruta_descarga;
+        }
+
+
+        public string comprimir_Files(List<download> list_download, int usuario_creacion)
+        {
+            string resultado = "";
+            try
+            {
+                string ruta_destino = "";
+                string ruta_descarga = "";
+                string pathFoto = "";
+
+                ruta_destino = System.Web.Hosting.HostingEnvironment.MapPath("~/Archivos/Descargas/Fotos_ParteDiario" + usuario_creacion + "Descarga.zip");
+                ruta_descarga = ConfigurationManager.AppSettings["Archivos"] + "Descargas/Fotos_ParteDiario" + usuario_creacion + "Descarga.zip";
+
+                if (File.Exists(ruta_destino)) /// verificando si existe el archivo zip
+                {
+                    System.IO.File.Delete(ruta_destino);
+                }
+                using (Ionic.Zip.ZipFile zip = new Ionic.Zip.ZipFile())
+                {
+                    foreach (download item in list_download)
+                    {
+                        pathFoto = item.ubicacion + item.nombreFile;
+                        if (System.IO.File.Exists(pathFoto))
+                        {
+                            zip.AddFile(pathFoto, "");
+                        }
+                    }
+                    // Guardando el archivo zip 
+                    zip.Save(ruta_destino);
+                }
+                Thread.Sleep(2000);
+
+                if (File.Exists(ruta_destino))
+                {
+                    resultado = ruta_descarga;
+                }
+                else
+                {
+                    throw new System.InvalidOperationException("No se pudo generar la Descarga del Archivo");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return resultado;
         }
 
 

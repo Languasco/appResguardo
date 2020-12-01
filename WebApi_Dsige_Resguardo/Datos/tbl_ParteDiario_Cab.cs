@@ -40,5 +40,9 @@ namespace Datos
         public Nullable<System.DateTime> fecha_creacion { get; set; }
         public Nullable<int> usuario_edicion { get; set; }
         public Nullable<System.DateTime> fecha_edicion { get; set; }
+        public Nullable<int> id_Solicitud { get; set; }
+        public string obs_incidencia { get; set; }
+        public Nullable<System.DateTime> fechaInicioPD { get; set; }
+        public Nullable<System.DateTime> fechaFinPD { get; set; }
     }
 }

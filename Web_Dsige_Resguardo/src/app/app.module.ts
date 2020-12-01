@@ -54,12 +54,16 @@ import { UbicacionOtComponent } from './pages/Reportes/ubicacion-ot/ubicacion-ot
 import { TreeviewModule } from 'ngx-treeview';
 import { CargoPersonalComponent } from './pages/Mantenimientos/cargo-personal/cargo-personal.component';
 import { TareoComponent } from './pages/Reportes/tareo/tareo.component';
+import { SolicitudResguardoComponent } from './pages/Procesos/solicitud-resguardo/solicitud-resguardo.component';
+import { BandejaAsignacionComponent } from './pages/Procesos/bandeja-asignacion/bandeja-asignacion.component';
+import { AprobarTareoComponent } from './pages/Procesos/aprobar-tareo/aprobar-tareo.component';
+import { BandejaAsignacionMasivoComponent } from './pages/Procesos/bandeja-asignacion-masivo/bandeja-asignacion-masivo.component';
 
 
  
  
- const config: SocketIoConfig = { url: 'http://173.248.174.62:5000', options: {} }; 
-//const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} }; 
+ //const config: SocketIoConfig = { url: 'http://173.248.174.62:5000', options: {} }; 
+ 
 
 @NgModule({
   declarations: [
@@ -83,7 +87,11 @@ import { TareoComponent } from './pages/Reportes/tareo/tareo.component';
     ConfiguracionZonasComponent,
     UbicacionOtComponent,
     CargoPersonalComponent,
-    TareoComponent
+    TareoComponent,
+    SolicitudResguardoComponent,
+    BandejaAsignacionComponent,
+    AprobarTareoComponent,
+    BandejaAsignacionMasivoComponent
   ],
   imports: [
     BrowserModule,
@@ -97,7 +105,7 @@ import { TareoComponent } from './pages/Reportes/tareo/tareo.component';
     InfiniteScrollModule,
     LightboxModule,
     Ng2SearchPipeModule,
-    SocketIoModule.forRoot(config),
+    // SocketIoModule.forRoot(config),
     TreeviewModule.forRoot(),
     
   ],

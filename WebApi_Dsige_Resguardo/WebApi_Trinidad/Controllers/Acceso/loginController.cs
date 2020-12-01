@@ -56,7 +56,8 @@ namespace WebApi_dsigeResguardo.Controllers.Acceso
                                              id_usuarios = w.id_Usuario,
                                              nombre_principal = od.nombre_opcion,
                                              parent_id_principal = od.parentID,
-                                             urlmagene_principal = od.urlImagen_Opcion
+                                             urlmagene_principal = od.urlImagen_Opcion, 
+
                                          }).Distinct();
 
                         foreach (var item in listaMenu)
@@ -77,7 +78,10 @@ namespace WebApi_dsigeResguardo.Controllers.Acceso
                                                      {
                                                          nombre_page = od.nombre_opcion,
                                                          url_page = od.url_opcion,
-                                                         orden = od.orden_Opcion
+                                                         orden = od.orden_Opcion,
+
+                      
+
                                                      })
                                             //.Distinct()
                                             .ToList()

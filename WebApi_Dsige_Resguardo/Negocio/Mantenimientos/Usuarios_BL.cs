@@ -38,6 +38,36 @@ namespace Negocio.Mantenimientos
             }
         }
 
+        public DataTable get_mantenimientoUsuarios( int idEmpresa, int idArea, int idEstado  )
+        {
+            DataTable dt_detalle = new DataTable();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("DSIGE_PROY_W_MANT_USUARIO_CAB", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idEmpresa", SqlDbType.Int).Value = idEmpresa;
+                        cmd.Parameters.Add("@idArea", SqlDbType.Int).Value = idArea;
+                        cmd.Parameters.Add("@idEstado", SqlDbType.Int).Value = idEstado;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                        }
+                    }
+                }
+                return dt_detalle;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public DataTable get_perfilAccesos(string idOpciones)
         {
             DataTable dt_detalle = new DataTable();
@@ -167,6 +197,34 @@ namespace Negocio.Mantenimientos
                         cmd.Parameters.Add("@idOpciones", SqlDbType.VarChar).Value = idOpciones;
                         cmd.Parameters.Add("@idEventos", SqlDbType.VarChar).Value = idEventos;
                         cmd.Parameters.Add("@idPerfil", SqlDbType.Int).Value = idPerfil;
+                        cmd.ExecuteNonQuery();
+                        res = "OK";
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return res;
+        }
+        
+
+        public string set_insert_update_usuarios( int id_Usuario, string opcion)
+        {
+            string res = "";
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("DSIGE_PROY_W_MANT_USUARIO_INSERT_UPDATE", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_Usuario", SqlDbType.Int).Value = id_Usuario;
+                        cmd.Parameters.Add("@opcion", SqlDbType.VarChar).Value = opcion;
+
                         cmd.ExecuteNonQuery();
                         res = "OK";
                     }

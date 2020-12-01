@@ -13,7 +13,6 @@ namespace WebApi_dsigeResguardo.Controllers.Proceso
     [EnableCors("*", "*", "*")]
     public class AprobarOTController : ApiController
     {
-
         private DSIGE_ResguardoEntities db = new DSIGE_ResguardoEntities();
         public object GetAprobarOrdenTrabajo(int opcion, string filtro)
         {

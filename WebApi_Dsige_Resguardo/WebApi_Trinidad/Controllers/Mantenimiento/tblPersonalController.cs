@@ -65,30 +65,68 @@ namespace WebApi_dsigeResguardo.Controllers.Mantenimiento
                     int idEmpresa = Convert.ToInt32(parametros[0].ToString());
                     int idEstado = Convert.ToInt32(parametros[1].ToString());
 
-                    res.ok = true;
-                    res.data = (from a in db.tbl_Personal 
-                                join b in db.tbl_Cargo_Personal on a.id_Cargo equals b.id_Cargo
-                                join c in db.tbl_Empresas  on a.id_Empresa  equals c.id_Empresa 
-                                join d in db.tbl_Distritos on a.id_Distrito equals d.id_Distrito
-                                select new
-                                {
-                                    a.id_Personal,
-                                    a.id_Empresa,
-                                    c.razonSocial_Empresa,
-                                    a.id_TipoDoc,
-                                    a.nroDocumento_Personal,
-                                    a.apellidos_Personal,
-                                    a.nombres_Personal,
-                                    a.id_Cargo,   
-                                    b.nombreCargo,
-                                    a.id_Distrito,
-                                    d.nombreDistrito,
-                                    a.direccion_Personal,
-                                    a.estado,
-                                    descripcion_estado = a.estado == 0 ? "INACTIVO" : "ACTIVO",
-                                    a.usuario_creacion
-                                }).ToList();
-                    res.totalpage = 0;
+
+                    if (idEmpresa == 0)
+                    {
+                        res.ok = true;
+                        res.data = (from a in db.tbl_Personal
+                                    join b in db.tbl_Cargo_Personal on a.id_Cargo equals b.id_Cargo
+                                    join c in db.tbl_Empresas on a.id_Empresa equals c.id_Empresa
+                                    join d in db.tbl_Distritos on a.id_Distrito equals d.id_Distrito
+                                    where a.estado == idEstado
+                                    select new
+                                    {
+                                        a.id_Personal,
+                                        a.id_Empresa,
+                                        c.razonSocial_Empresa,
+                                        a.id_TipoDoc,
+                                        a.nroDocumento_Personal,
+                                        a.apellidos_Personal,
+                                        a.nombres_Personal,
+                                        a.id_Cargo,
+                                        b.nombreCargo,
+                                        a.id_Distrito,
+                                        d.nombreDistrito,
+                                        a.direccion_Personal,
+                                        a.estado,
+                                        descripcion_estado = a.estado == 0 ? "INACTIVO" : "ACTIVO",
+                                        a.usuario_creacion
+                                    }).ToList();
+                        res.totalpage = 0;
+                    }
+                    else {
+                        res.ok = true;
+                        res.data = (from a in db.tbl_Personal
+                                    join b in db.tbl_Cargo_Personal on a.id_Cargo equals b.id_Cargo
+                                    join c in db.tbl_Empresas on a.id_Empresa equals c.id_Empresa
+                                    join d in db.tbl_Distritos on a.id_Distrito equals d.id_Distrito
+                                    where a.estado == idEstado && a.id_Empresa == idEmpresa
+                                    select new
+                                    {
+                                        a.id_Personal,
+                                        a.id_Empresa,
+                                        c.razonSocial_Empresa,
+                                        a.id_TipoDoc,
+                                        a.nroDocumento_Personal,
+                                        a.apellidos_Personal,
+                                        a.nombres_Personal,
+                                        a.id_Cargo,
+                                        b.nombreCargo,
+                                        a.id_Distrito,
+                                        d.nombreDistrito,
+                                        a.direccion_Personal,
+                                        a.estado,
+                                        descripcion_estado = a.estado == 0 ? "INACTIVO" : "ACTIVO",
+                                        a.usuario_creacion
+                                    }).ToList();
+                        res.totalpage = 0;
+                    }
+
+
+
+
+
+
                     resul = res;
                 }
                 else if (opcion == 4)

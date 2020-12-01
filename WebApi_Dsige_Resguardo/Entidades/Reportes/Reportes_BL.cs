@@ -84,7 +84,9 @@ namespace Entidades.Reportes
     }
 
     public class Tareo_E {
-
+        
+        public bool checkeado { get; set; }
+        public string id_ParteDiario { get; set; }
         public string dia { get; set; }
         public string personal { get; set; }
         public string jefeCuadrilla { get; set; }
@@ -94,9 +96,22 @@ namespace Entidades.Reportes
         public string horaInicio { get; set; }
         public string horaTermino { get; set; }
         public string totalHoras { get; set; }
+        public string totalTiempo { get; set; }        
 
         public string precio { get; set; }
         public string totalSoles { get; set; }
+               
+        public string  areaReporte { get; set; }
+        public string  fechaReporte { get; set; }
+        public string  coordinadorReporte { get; set; }
+        public string  efectivoPolicialReporte { get; set; }
+        public string  lugarTrabajoReporte { get; set; }
+        public string  observacionReporte { get; set; }
+        public string  urlFirmaEfectivoReporte { get; set; }
+        public string urlFirmaJefeCuadrillaReporte { get; set; }
+        public string idEstado { get; set; }
+        public string descripcionEstado { get; set; }
+
     }
 
 }

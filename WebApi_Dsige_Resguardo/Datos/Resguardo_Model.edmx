@@ -180,6 +180,23 @@
           <Property Name="fecha_creacion" Type="datetime" />
           <Property Name="usuario_edicion" Type="int" />
           <Property Name="fecha_edicion" Type="datetime" />
+          <Property Name="id_Solicitud" Type="int" />
+          <Property Name="obs_incidencia" Type="varchar" MaxLength="250" />
+          <Property Name="fechaInicioPD" Type="datetime" />
+          <Property Name="fechaFinPD" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_ParteDiario_Foto">
+          <Key>
+            <PropertyRef Name="id_parteDiario_foto" />
+          </Key>
+          <Property Name="id_parteDiario_foto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_ParteDiario" Type="int" Nullable="false" />
+          <Property Name="fotourl" Type="varchar" MaxLength="150" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_cracion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
         </EntityType>
         <EntityType Name="tbl_Perfil">
           <Key>
@@ -238,6 +255,39 @@
           <Property Name="usuario_edicion" Type="int" />
           <Property Name="fecha_edicion" Type="datetime" />
         </EntityType>
+        <EntityType Name="tbl_Solicitud_Cab">
+          <Key>
+            <PropertyRef Name="id_Solicitud_Cab" />
+          </Key>
+          <Property Name="id_Solicitud_Cab" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fechaAtencion" Type="datetime" />
+          <Property Name="id_Servicios" Type="int" />
+          <Property Name="id_PersonalCoordinar" Type="int" />
+          <Property Name="asigna_JC" Type="int" />
+          <Property Name="id_PersonalJefeCuadrilla" Type="int" />
+          <Property Name="cantidadEfectivos" Type="int" />
+          <Property Name="fechaAsignacion" Type="datetime" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+          <Property Name="cantidadHoras" Type="float" />
+          <Property Name="fechaAsignacion_Final" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Solicitud_Det">
+          <Key>
+            <PropertyRef Name="id_Solicitud_Det" />
+          </Key>
+          <Property Name="id_Solicitud_Det" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Solicitud_Cab" Type="int" />
+          <Property Name="id_UsuarioEfectivoPolicial" Type="int" />
+          <Property Name="estado" Type="int" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+        </EntityType>
         <EntityType Name="tbl_Usuarios">
           <Key>
             <PropertyRef Name="id_Usuario" />
@@ -255,6 +305,18 @@
           <Property Name="login_usuario" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="contrasenia_usuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="estado" Type="int" Nullable="false" />
+          <Property Name="usuario_creacion" Type="int" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="usuario_edicion" Type="int" />
+          <Property Name="fecha_edicion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_Usuarios_Servicios">
+          <Key>
+            <PropertyRef Name="id_usuario_servicio" />
+          </Key>
+          <Property Name="id_usuario_servicio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_usuario" Type="int" />
+          <Property Name="id_servicio" Type="int" />
           <Property Name="usuario_creacion" Type="int" />
           <Property Name="fecha_creacion" Type="datetime" />
           <Property Name="usuario_edicion" Type="int" />
@@ -296,11 +358,15 @@
           <EntitySet Name="TBL_Operarios_RegistroGPS" EntityType="Self.TBL_Operarios_RegistroGPS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Parametro_Movil" EntityType="Self.tbl_Parametro_Movil" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_ParteDiario_Cab" EntityType="Self.tbl_ParteDiario_Cab" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_ParteDiario_Foto" EntityType="Self.tbl_ParteDiario_Foto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Perfil" EntityType="Self.tbl_Perfil" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Perfil_Accesos" EntityType="Self.tbl_Perfil_Accesos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Personal" EntityType="Self.tbl_Personal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Servicios" EntityType="Self.tbl_Servicios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Solicitud_Cab" EntityType="Self.tbl_Solicitud_Cab" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Solicitud_Det" EntityType="Self.tbl_Solicitud_Det" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Usuarios" EntityType="Self.tbl_Usuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Usuarios_Servicios" EntityType="Self.tbl_Usuarios_Servicios" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__tbl_Acees__id_Op__3C69FB99" Association="Self.FK__tbl_Acees__id_Op__3C69FB99">
             <End Role="tbl_Definicion_Opciones" EntitySet="tbl_Definicion_Opciones" />
             <End Role="tbl_Aceesos_Evento" EntitySet="tbl_Aceesos_Evento" />
@@ -330,6 +396,7 @@
           <EntitySet Name="tbl_Perfil_Accesos" EntityType="DSIGE_ResguardoModel.tbl_Perfil_Accesos" />
           <EntitySet Name="tbl_Personal" EntityType="DSIGE_ResguardoModel.tbl_Personal" />
           <EntitySet Name="tbl_Servicios" EntityType="DSIGE_ResguardoModel.tbl_Servicios" />
+          <EntitySet Name="tbl_Solicitud_Det" EntityType="DSIGE_ResguardoModel.tbl_Solicitud_Det" />
           <EntitySet Name="tbl_Usuarios" EntityType="DSIGE_ResguardoModel.tbl_Usuarios" />
           <AssociationSet Name="FK__tbl_Acees__id_Op__3C69FB99" Association="DSIGE_ResguardoModel.FK__tbl_Acees__id_Op__3C69FB99">
             <End Role="tbl_Definicion_Opciones" EntitySet="tbl_Definicion_Opciones" />
@@ -339,6 +406,9 @@
             <End Role="tbl_Usuarios" EntitySet="tbl_Usuarios" />
             <End Role="tbl_Aceesos_Evento" EntitySet="tbl_Aceesos_Evento" />
           </AssociationSet>
+          <EntitySet Name="tbl_Usuarios_Servicios" EntityType="DSIGE_ResguardoModel.tbl_Usuarios_Servicios" />
+          <EntitySet Name="tbl_Solicitud_Cab" EntityType="DSIGE_ResguardoModel.tbl_Solicitud_Cab" />
+          <EntitySet Name="tbl_ParteDiario_Foto" EntityType="DSIGE_ResguardoModel.tbl_ParteDiario_Foto" />
         </EntityContainer>
         <EntityType Name="tbl_Aceesos_Evento">
           <Key>
@@ -518,6 +588,10 @@
           <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
           <Property Name="usuario_edicion" Type="Int32" />
           <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <Property Name="id_Solicitud" Type="Int32" />
+          <Property Name="obs_incidencia" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="fechaInicioPD" Type="DateTime" Precision="3" />
+          <Property Name="fechaFinPD" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tbl_Perfil">
           <Key>
@@ -576,6 +650,19 @@
           <Property Name="usuario_edicion" Type="Int32" />
           <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="tbl_Solicitud_Det">
+          <Key>
+            <PropertyRef Name="id_Solicitud_Det" />
+          </Key>
+          <Property Name="id_Solicitud_Det" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Solicitud_Cab" Type="Int32" />
+          <Property Name="id_UsuarioEfectivoPolicial" Type="Int32" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="tbl_Usuarios">
           <Key>
             <PropertyRef Name="id_Usuario" />
@@ -623,7 +710,52 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="tbl_Usuarios_Servicios">
+          <Key>
+            <PropertyRef Name="id_usuario_servicio" />
+          </Key>
+          <Property Name="id_usuario_servicio" Type="Int32" Nullable="false" />
+          <Property Name="id_usuario" Type="Int32" />
+          <Property Name="id_servicio" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_Solicitud_Cab">
+          <Key>
+            <PropertyRef Name="id_Solicitud_Cab" />
+          </Key>
+          <Property Name="id_Solicitud_Cab" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fechaAtencion" Type="DateTime" Precision="3" />
+          <Property Name="id_Servicios" Type="Int32" />
+          <Property Name="id_PersonalCoordinar" Type="Int32" />
+          <Property Name="asigna_JC" Type="Int32" />
+          <Property Name="id_PersonalJefeCuadrilla" Type="Int32" />
+          <Property Name="cantidadEfectivos" Type="Int32" />
+          <Property Name="fechaAsignacion" Type="DateTime" Precision="3" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_creacion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+          <Property Name="cantidadHoras" Type="Double" />
+          <Property Name="fechaAsignacion_Final" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tbl_ParteDiario_Foto">
+          <Key>
+            <PropertyRef Name="id_parteDiario_foto" />
+          </Key>
+          <Property Name="id_parteDiario_foto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_ParteDiario" Type="Int32" Nullable="false" />
+          <Property Name="fotourl" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="usuario_cracion" Type="Int32" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="usuario_edicion" Type="Int32" />
+          <Property Name="fecha_edicion" Type="DateTime" Precision="3" />
+        </EntityType>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -787,6 +919,10 @@
           <EntitySetMapping Name="tbl_ParteDiario_Cab">
             <EntityTypeMapping TypeName="DSIGE_ResguardoModel.tbl_ParteDiario_Cab">
               <MappingFragment StoreEntitySet="tbl_ParteDiario_Cab">
+                <ScalarProperty Name="fechaFinPD" ColumnName="fechaFinPD" />
+                <ScalarProperty Name="fechaInicioPD" ColumnName="fechaInicioPD" />
+                <ScalarProperty Name="obs_incidencia" ColumnName="obs_incidencia" />
+                <ScalarProperty Name="id_Solicitud" ColumnName="id_Solicitud" />
                 <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
                 <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
                 <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
@@ -877,6 +1013,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Solicitud_Det">
+            <EntityTypeMapping TypeName="DSIGE_ResguardoModel.tbl_Solicitud_Det">
+              <MappingFragment StoreEntitySet="tbl_Solicitud_Det">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="id_UsuarioEfectivoPolicial" ColumnName="id_UsuarioEfectivoPolicial" />
+                <ScalarProperty Name="id_Solicitud_Cab" ColumnName="id_Solicitud_Cab" />
+                <ScalarProperty Name="id_Solicitud_Det" ColumnName="id_Solicitud_Det" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tbl_Usuarios">
             <EntityTypeMapping TypeName="DSIGE_ResguardoModel.tbl_Usuarios">
               <MappingFragment StoreEntitySet="tbl_Usuarios">
@@ -897,6 +1047,54 @@
                 <ScalarProperty Name="id_EmpresaUsuario" ColumnName="id_EmpresaUsuario" />
                 <ScalarProperty Name="id_Personal" ColumnName="id_Personal" />
                 <ScalarProperty Name="id_Usuario" ColumnName="id_Usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Usuarios_Servicios">
+            <EntityTypeMapping TypeName="DSIGE_ResguardoModel.tbl_Usuarios_Servicios">
+              <MappingFragment StoreEntitySet="tbl_Usuarios_Servicios">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="id_servicio" ColumnName="id_servicio" />
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+                <ScalarProperty Name="id_usuario_servicio" ColumnName="id_usuario_servicio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Solicitud_Cab">
+            <EntityTypeMapping TypeName="DSIGE_ResguardoModel.tbl_Solicitud_Cab">
+              <MappingFragment StoreEntitySet="tbl_Solicitud_Cab">
+                <ScalarProperty Name="fechaAsignacion_Final" ColumnName="fechaAsignacion_Final" />
+                <ScalarProperty Name="cantidadHoras" ColumnName="cantidadHoras" />
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_creacion" ColumnName="usuario_creacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fechaAsignacion" ColumnName="fechaAsignacion" />
+                <ScalarProperty Name="cantidadEfectivos" ColumnName="cantidadEfectivos" />
+                <ScalarProperty Name="id_PersonalJefeCuadrilla" ColumnName="id_PersonalJefeCuadrilla" />
+                <ScalarProperty Name="asigna_JC" ColumnName="asigna_JC" />
+                <ScalarProperty Name="id_PersonalCoordinar" ColumnName="id_PersonalCoordinar" />
+                <ScalarProperty Name="id_Servicios" ColumnName="id_Servicios" />
+                <ScalarProperty Name="fechaAtencion" ColumnName="fechaAtencion" />
+                <ScalarProperty Name="id_Solicitud_Cab" ColumnName="id_Solicitud_Cab" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_ParteDiario_Foto">
+            <EntityTypeMapping TypeName="DSIGE_ResguardoModel.tbl_ParteDiario_Foto">
+              <MappingFragment StoreEntitySet="tbl_ParteDiario_Foto">
+                <ScalarProperty Name="fecha_edicion" ColumnName="fecha_edicion" />
+                <ScalarProperty Name="usuario_edicion" ColumnName="usuario_edicion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="usuario_cracion" ColumnName="usuario_cracion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fotourl" ColumnName="fotourl" />
+                <ScalarProperty Name="id_ParteDiario" ColumnName="id_ParteDiario" />
+                <ScalarProperty Name="id_parteDiario_foto" ColumnName="id_parteDiario_foto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -99,6 +99,9 @@
     <Compile Include="tbl_ParteDiario_Cab.cs">
       <DependentUpon>Resguardo_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_ParteDiario_Foto.cs">
+      <DependentUpon>Resguardo_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_Perfil.cs">
       <DependentUpon>Resguardo_Model.tt</DependentUpon>
     </Compile>
@@ -111,7 +114,16 @@
     <Compile Include="tbl_Servicios.cs">
       <DependentUpon>Resguardo_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_Solicitud_Cab.cs">
+      <DependentUpon>Resguardo_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Solicitud_Det.cs">
+      <DependentUpon>Resguardo_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_Usuarios.cs">
+      <DependentUpon>Resguardo_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Usuarios_Servicios.cs">
       <DependentUpon>Resguardo_Model.tt</DependentUpon>
     </Compile>
   </ItemGroup>

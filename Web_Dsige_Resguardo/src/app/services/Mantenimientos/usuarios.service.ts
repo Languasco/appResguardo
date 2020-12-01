@@ -152,6 +152,7 @@ export class UsuariosService {
     let parametros = new HttpParams();
     parametros = parametros.append('opcion', '10');
     parametros = parametros.append('filtro', idUsuarioBD + '|' +  areas  + '|' +  idUser  );
+ 
     return this.http.get( this.URL + 'tblUsuarios' , {params: parametros});
   }  
 
