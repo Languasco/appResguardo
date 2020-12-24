@@ -109,25 +109,25 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>03/15/2020 23:13:04</publishTime>
     </File>
     <File Include="bin/Datos.dll">
-      <publishTime>11/30/2020 10:16:07</publishTime>
+      <publishTime>12/07/2020 17:49:20</publishTime>
     </File>
     <File Include="bin/Datos.dll.config">
       <publishTime>09/08/2020 15:12:58</publishTime>
     </File>
     <File Include="bin/Datos.pdb">
-      <publishTime>11/30/2020 10:16:07</publishTime>
+      <publishTime>12/07/2020 17:49:20</publishTime>
     </File>
     <File Include="bin/EngineIoClientDotNet.dll">
       <publishTime>01/04/2016 05:14:48</publishTime>
     </File>
     <File Include="bin/Entidades.dll">
-      <publishTime>11/30/2020 11:56:04</publishTime>
+      <publishTime>12/07/2020 17:49:20</publishTime>
     </File>
     <File Include="bin/Entidades.dll.config">
       <publishTime>08/03/2020 10:05:48</publishTime>
     </File>
     <File Include="bin/Entidades.pdb">
-      <publishTime>11/30/2020 11:56:04</publishTime>
+      <publishTime>12/07/2020 17:49:20</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>03/15/2020 23:13:05</publishTime>
@@ -190,10 +190,10 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>03/15/2020 23:13:05</publishTime>
     </File>
     <File Include="bin/Negocio.dll">
-      <publishTime>11/30/2020 16:01:11</publishTime>
+      <publishTime>12/07/2020 17:49:20</publishTime>
     </File>
     <File Include="bin/Negocio.pdb">
-      <publishTime>11/30/2020 16:01:11</publishTime>
+      <publishTime>12/07/2020 17:49:20</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>03/15/2020 23:13:05</publishTime>
@@ -391,10 +391,10 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>09/08/2020 09:40:39</publishTime>
     </File>
     <File Include="bin/WebApi_dsigeResguardo.dll">
-      <publishTime>11/30/2020 16:01:12</publishTime>
+      <publishTime>12/07/2020 17:49:21</publishTime>
     </File>
     <File Include="bin/WebApi_dsigeResguardo.pdb">
-      <publishTime>11/30/2020 16:01:12</publishTime>
+      <publishTime>12/07/2020 17:49:21</publishTime>
     </File>
     <File Include="bin/WebApi_GoRelax.dll">
       <publishTime>01/01/0001 00:00:00</publishTime>

@@ -31,8 +31,10 @@
                     </select>
                 </div>
 
-                <div class="col-md-2">
-                    <div class="btn-group mt-4 ">
+                <div class="col-md-4 mt-4">
+                    <button class="btn btn-primary   " style="font-size: 13px;" (click)="mostrarInformacion()">  <i class="fa fa-search"> Mostrar</i> </button>
+                    <button class="btn btn-warning  ml-1 " (click)="descargarGrilla()" style="font-size: 13px;">  <i class="fa fa-download"> Exportar</i> </button>
+                    <!-- <div class="btn-group mt-4 ">
                         <button type="button" class="btn btn-dark dropdown-toggle" style="font-family: 'Montserrat', sans-serif;font-size: 15px;font-weight: 600;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           - ACCIONES -
                         </button>
@@ -40,25 +42,18 @@
                             <div class="p-2">
                                 <button class="btn btn-primary btn-block  " style="font-size: 13px;" (click)="mostrarInformacion()">  <i class="fa fa-search"> Mostrar</i> </button>
                             </div>
-
-                            <!-- <div class="p-2">
-                                <button class="btn btn-success btn-block  " (click)="nuevo()" style="font-size: 13px;">  <i class="fa fa-plus-circle"> Nuevo</i> </button>
-                            </div> -->
-
                             <div class="dropdown-divider"></div>
                             <div class="p-2">
                                 <button class="btn btn-warning btn-block  " (click)="descargarGrilla()" style="font-size: 13px;">  <i class="fa fa-download"> Exportar</i> </button>
-
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </form>
 
-        <hr>
 
-        <div class="tableFixHead">
+        <div class="tableFixHead mt-2">
             <table class="table  table-hover table-sm">
                 <thead class="theadTable">
 

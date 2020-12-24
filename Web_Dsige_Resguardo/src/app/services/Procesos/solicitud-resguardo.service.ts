@@ -243,5 +243,13 @@ export class SolicitudResguardoService {
     return this.http.get( this.URL + 'tblSolicitud_Cab' , { params: parametros });
   }
 
+  set_cerrarAsignacion_masivo(idSol_masivos : string, idusuario:number  ){
+    let parametros = new HttpParams();
+    parametros = parametros.append('opcion', '20');
+    parametros = parametros.append('filtro', String(idSol_masivos) + '|' +  idusuario  );
+
+    return this.http.get( this.URL + 'tblSolicitud_Cab' , {params: parametros});
+  }
+
 
 }

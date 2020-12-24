@@ -15,9 +15,7 @@ using Negocio.Resultados;
 
 namespace WebApi_dsigeResguardo.Controllers.Proceso
 {
-
     [EnableCors("*", "*", "*")]
-
     public class tblSolicitud_CabController : ApiController
     {
         private DSIGE_ResguardoEntities db = new DSIGE_ResguardoEntities();
@@ -253,6 +251,14 @@ namespace WebApi_dsigeResguardo.Controllers.Proceso
 
                     resul = obj_negocio.set_eliminarDetalleSolicitud_masivo(idSol_masivos, id_UsuarioEfectivoPolicial, idUsuario);
                 }
+                else if (opcion == 20)
+                {
+                    string[] parametros = filtro.Split('|');
+                    string idSol_masivos = parametros[0].ToString();
+                    int idUsuario = Convert.ToInt32(parametros[1].ToString());
+
+                    resul = obj_negocio.set_cerrarAsignacion_SolicitudCab_masivo(idSol_masivos, idUsuario);
+                }
                 else
                 {
                     res.ok = false;
@@ -341,7 +347,6 @@ namespace WebApi_dsigeResguardo.Controllers.Proceso
             return res;
         }
                
-
         // DELETE: api/tblSolicitud_Cab/5
         [ResponseType(typeof(tbl_Solicitud_Cab))]
         public IHttpActionResult Deletetbl_Solicitud_Cab(int id)

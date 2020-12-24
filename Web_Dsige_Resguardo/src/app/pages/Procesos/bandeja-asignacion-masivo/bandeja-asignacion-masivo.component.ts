@@ -30,7 +30,6 @@ export class BandejaAsignacionMasivoComponent implements OnInit  {
   servicios :any[]=[]; 
  
   estados :any[]=[];  
-  estadosBD :any[]=[];  
   
   jefeCuadrillas :any[]=[];  
    
@@ -45,6 +44,8 @@ export class BandejaAsignacionMasivoComponent implements OnInit  {
 
   idSolicitudCab_global :number = 0;
   idEstado_global :number = 9;
+
+  cantEfect:number = 0;
 
   filtrarMantenimiento = "";
   datepiekerConfig:Partial<BsDatepickerConfig>;
@@ -91,8 +92,8 @@ inicializarFormularioDet(){
   .subscribe( ([ _servicios,_estados , _jefeCuadrillas])=>{
       this.servicios = _servicios;
  
-      this.estados = _estados.filter(est=> est.id_Estado == 3 ||   est.id_Estado == 10   );
-      this.estadosBD = _estados.filter(est=> est.id_Estado == 3 ||   est.id_Estado == 10   );
+      this.estados = _estados.filter(est=> est.id_Estado == 3 ||   est.id_Estado == 10 ||   est.id_Estado == 16   );
+ 
 
       this.jefeCuadrillas = _jefeCuadrillas; 
 
@@ -142,43 +143,8 @@ inicializarFormularioDet(){
         this.mostrarInformacion();
   },0); 
 }
- 
-   
-  cerrarAsignacion(){
-
-    this.alertasService.Swal_Question('Sistemas', 'Esta seguro de cerrar la asignacion ?')
-    .then((result)=>{
-      if(result.value){
- 
-        Swal.fire({  icon: 'info', allowOutsideClick: false, allowEscapeKey: false, text: 'Espere por favor'  })
-        Swal.showLoading();
-        this.solicitudResguardoService.set_cerrarAsignacion( this.idSolicitudCab_global, this.idUserGlobal ).subscribe((res:RespuestaServer)=>{
-          Swal.close();        
-          if (res.ok ==true) {             
-           
-            for (const sol of this.solicitudesCab) {
-              if (sol.id_Solicitud_Cab == this.idSolicitudCab_global ) {               
-                sol.idEstado = 3;
-                sol.descripcion_estado =  "ASIGNADO" ;
-                break;
-              }
-            }
-
-            this.alertasService.Swal_Success('Proceso realizado correctamente..')  
-            this.cerrarModal();
- 
-          }else{
-            this.alertasService.Swal_alert('error', JSON.stringify(res.data));
-            alert(JSON.stringify(res.data));
-          }
-        })
-         
-      }
-    }) 
-
-  }
-
- 
+  
+  
 
   efectivosPoliciales(objBD :any){
 
@@ -273,6 +239,20 @@ inicializarFormularioDet(){
     this.solicitudResguardoService.get_solicitudDet_masivo( codigos.join(), this.idUserGlobal  ).subscribe((res:RespuestaServer)=>{
      if (res.ok) {       
        this.solicitudesDet = res.data; 
+
+      //  ---verificando --
+       if (this.solicitudesDet.length == this.cantEfect  ) {
+        this.flagCerrar = true;
+       }else{
+           //  ---verificando --
+           if (this.solicitudesDet.length > this.cantEfect  ) {
+            this.flagCerrar = true;
+           }else{
+             this.flagCerrar = false;
+           }
+       }
+
+
        this.blank_Detalle();
      }else{
        this.alertasService.Swal_alert('error', JSON.stringify(res.data));
@@ -390,6 +370,17 @@ inicializarFormularioDet(){
       return;
     }
 
+    this.cantEfect = 0;
+    for (let index = 0; index < this.listSolicitudesTemp.length; index++) {
+      if ( index == 0) {
+        this.cantEfect = this.listSolicitudesTemp[index].cantidadEfectivos;
+      }else{
+          if ( this.cantEfect != this.listSolicitudesTemp[index].cantidadEfectivos ) {
+            this.alertasService.Swal_alert('error', 'La cantidad de Efectivos de la solicitud no coinciden ,  \n Por favor seleccionar solicitudes  con cantidad de efectivos similares.');
+            return;
+          }
+      }      
+    }
 
     this.resguardoEventos();
     this.getLiquidacionDet();
@@ -399,6 +390,33 @@ inicializarFormularioDet(){
      },0); 
 
   } 
+
+  cerrarAsignacion(){
+
+    let codigos = this.funcionGlobalServices.obtenerTodos_IdPrincipal(this.listSolicitudesTemp,'id_Solicitud_Cab'); 
+
+    this.alertasService.Swal_Question('Sistemas', 'Esta seguro de cerrar la asignacion ?')
+    .then((result)=>{
+      if(result.value){
+ 
+        Swal.fire({  icon: 'info', allowOutsideClick: false, allowEscapeKey: false, text: 'Espere por favor'  })
+        Swal.showLoading();
+        this.solicitudResguardoService.set_cerrarAsignacion_masivo( codigos.join() , this.idUserGlobal ).subscribe((res:RespuestaServer)=>{
+          Swal.close();        
+          if (res.ok ==true) {             
+            this.mostrarInformacion();
+            this.alertasService.Swal_Success('Proceso realizado correctamente..')  
+            this.cerrarModal(); 
+          }else{
+            this.alertasService.Swal_alert('error', JSON.stringify(res.data));
+            alert(JSON.stringify(res.data));
+          }
+        })
+         
+      }
+    }) 
+
+  }
   
  
 

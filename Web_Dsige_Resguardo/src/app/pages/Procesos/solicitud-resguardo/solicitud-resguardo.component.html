@@ -7,14 +7,14 @@
         <form [formGroup]="formParamsFiltro">
             <div class="row" style=" margin-top: -15px;">
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label for=""> Servicio</label>
                     <select class="form-control comboBox" formControlName="servicio">
                         <option [value]="sol.id_Servicios" *ngFor="let sol of servicios">{{sol.nombreServicio}}</option>
                     </select>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label for=""> Solicitante</label>
                     <select class="form-control comboBox" formControlName="idSolicitante">
                         <option value="0"> [ --SELECCIONE-- ]</option>
@@ -39,7 +39,7 @@
                     </select>
                 </div>
 
-                <div class="col-md-2">
+                <!-- <div class="col-md-2">
                     <div class="btn-group mt-4 ">
                         <button type="button" class="btn btn-dark dropdown-toggle" style="font-family: 'Montserrat', sans-serif;font-size: 15px;font-weight: 600;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           - ACCIONES -
@@ -61,8 +61,18 @@
                             </div>
                         </div>
                     </div>
+                </div> -->
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <div class="p-2">
+                        <button class="btn btn-primary  " style="font-size: 13px;" (click)="mostrarInformacion()">  <i class="fa fa-search"> Mostrar</i> </button>
+                        <button class="btn btn-success ml-2 " (click)="nuevo()" style="font-size: 13px;">  <i class="fa fa-plus-circle"> Nuevo</i> </button>
+                        <button class="btn btn-warning ml-2 " (click)="descargarGrilla()" style="font-size: 13px;">  <i class="fa fa-download"> Exportar</i> </button>
+                    </div>
                 </div>
             </div>
+
         </form>
 
         <hr>
