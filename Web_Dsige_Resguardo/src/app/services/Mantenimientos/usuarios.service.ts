@@ -23,6 +23,7 @@ export class UsuariosService {
 
   areas :any[] = [];
   perfiles :any[] = [];
+  efectivos :any[] = [];
 
   constructor(private http:HttpClient) { }
 
@@ -85,6 +86,22 @@ export class UsuariosService {
       return this.http.get( this.URL + 'tblUsuarios' , {params: parametros})
                  .pipe(map((res:any)=>{
                         this.perfiles = res.data;
+                       return res.data;
+                  }) );
+    }
+  }
+
+  get_efectivosPoliciales(){
+    if (this.efectivos.length > 0) {
+      return of( this.efectivos )
+    }else{
+      let parametros = new HttpParams();
+      parametros = parametros.append('opcion', '20');
+      parametros = parametros.append('filtro', '');
+  
+      return this.http.get( this.URL + 'tblUsuarios' , {params: parametros})
+                 .pipe(map((res:any)=>{
+                       this.efectivos = res.data;
                        return res.data;
                   }) );
     }

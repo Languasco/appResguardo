@@ -78,10 +78,11 @@
                         <th class="text-center">Cant. Efectivos</th>
                         <th class="text-center">Estado</th>
                         <th class="text-center">Ver Efectivo</th>
+                        <th class="text-center">Anular</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of solicitudesCab |  filter: filtrarMantenimiento  ; index as j" [ngStyle]="item.estado == 11 && {'color': 'red'}">
+                    <tr *ngFor="let item of solicitudesCab |  filter: filtrarMantenimiento  ; index as j">
                         <td scope="row"> {{j + 1}} </td>
                         <td class="text-center">
                             <div class="custom-control custom-checkbox custom-control-inline ">
@@ -99,6 +100,9 @@
                         <td class="text-center">{{item.descripcionEstado}}</td>
                         <td class="text-center">
                             <span class="badge badge-dark puntero" (click)="efectivosPoliciales(item)" style="padding: 5px;">  ver </span>
+                        </td>
+                        <td class="text-center">
+                            <a class="puntero linkOpcion" (click)="anular(item) " title="anular"> Anular</a>
                         </td>
                     </tr>
                 </tbody>

@@ -50,6 +50,8 @@ export class BandejaAsignacionMasivoComponent implements OnInit  {
   filtrarMantenimiento = "";
   datepiekerConfig:Partial<BsDatepickerConfig>;
   listSolicitudesTemp:any[]=[];  
+
+  
    
   constructor(private alertasService : AlertasService, private spinner: NgxSpinnerService, private loginService: LoginService,  private funcionGlobalServices : FuncionesglobalesService, private  solicitudResguardoService : SolicitudResguardoService ) {         
     this.idUserGlobal = this.loginService.get_idUsuario();
@@ -416,6 +418,44 @@ inicializarFormularioDet(){
       }
     }) 
 
+  }
+
+
+  anular(objBD:any){ 
+    // if (objBD.idEstado === 10 || objBD.idEstado =='10' || objBD.idEstado ===11 || objBD.idEstado =='11') {      
+    //   return;      
+    // }
+
+ 
+    this.alertasService.Swal_Question('Sistemas', 'Esta seguro de anular ?')
+    .then((result)=>{
+      if(result.value){
+ 
+        Swal.fire({  icon: 'info', allowOutsideClick: false, allowEscapeKey: false, text: 'Espere por favor'  })
+        Swal.showLoading();
+        this.solicitudResguardoService.set_anularBandejaAtencion(objBD.id_Solicitud_Cab, this.idUserGlobal ).subscribe((res:RespuestaServer)=>{
+          Swal.close();
+  
+          if (res.ok ==true) {             
+            // for (const sol of this.solicitudesCab) {
+            //   if (sol.id_Solicitud_Cab == objBD.id_Solicitud_Cab ) {               
+            //     sol.idEstado = 11;
+            //     sol.descripcion_estado =  "ANULADO" ;
+            //     break;
+            //   }
+            // }
+            this.mostrarInformacion();
+            this.alertasService.Swal_Success('Se anulo correctamente..')  
+ 
+          }else{
+            this.alertasService.Swal_alert('error', JSON.stringify(res.data));
+            alert(JSON.stringify(res.data));
+          }
+        })
+         
+      }
+    }) 
+ 
   }
   
  

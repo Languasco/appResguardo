@@ -209,7 +209,6 @@ namespace Negocio.Mantenimientos
             return res;
         }
         
-
         public string set_insert_update_usuarios( int id_Usuario, string opcion)
         {
             string res = "";
@@ -236,6 +235,33 @@ namespace Negocio.Mantenimientos
             }
             return res;
         }
+
+        public DataTable get_efectivosPoliciales()
+        {
+            DataTable dt_detalle = new DataTable();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("DSIGE_PROY_W_APROBAR_TAREO_COMBO_EFECTIVO_POLICIAL", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                        }
+                    }
+                }
+                return dt_detalle;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
 
     }
 }

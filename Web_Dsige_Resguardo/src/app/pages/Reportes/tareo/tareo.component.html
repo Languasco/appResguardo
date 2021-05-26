@@ -57,6 +57,7 @@
                                 <th scope="col">#</th>
                                 <th class="text-center">Dia</th>
                                 <th class="text-center">Personal</th>
+                                <th class="text-center">Placa</th>
                                 <th class="text-center">JefeCuadrilla</th>
                                 <th class="text-center">Direccion</th>
                                 <th class="text-center">NroOrden</th>
@@ -69,6 +70,7 @@
                                 <th class="text-center">Precio</th>
                                 <th class="text-center">Total Soles</th>
                                 <th class="text-center">ESTADO</th>
+                                <th class="text-center">COMENTARIO</th>
                                 <th class="text-center">PDF</th>
                                 <th class="text-center">INCIDENCIA</th>
                             </tr>
@@ -82,6 +84,7 @@
                                         {{item.personal}}
                                     </div>
                                 </td>
+                                <td>{{item.placa}}</td>
                                 <td>
                                     <div style="width: 250px;">
                                         {{item.jefeCuadrilla}}
@@ -106,6 +109,7 @@
                                 <td class="text-right">{{item.precio}}</td>
                                 <td class="text-right">{{item.totalSoles | number : '1.2-2' }}</td>
                                 <td>{{item.descripcionEstado}}</td>
+                                <td>{{item.comentario}}</td>
                                 <td class="text-center">
                                     <span class="badge badge-primary puntero" style="padding: 5px;" (click)="mostrarReportePDF(item)">  Ver </span>
                                 </td>

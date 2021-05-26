@@ -259,6 +259,18 @@ namespace WebApi_dsigeResguardo.Controllers.Proceso
 
                     resul = obj_negocio.set_cerrarAsignacion_SolicitudCab_masivo(idSol_masivos, idUsuario);
                 }
+                else if (opcion == 21)
+                {
+                    string[] parametros = filtro.Split('|');
+                    int idSolCab = Convert.ToInt32(parametros[0].ToString());
+                    int idUsuario = Convert.ToInt32(parametros[1].ToString());
+
+                    res.ok = true;
+                    res.data = obj_negocio.set_anularBandejaAtencion(idSolCab, idUsuario);
+                    res.totalpage = 0;
+
+                    resul = res;
+                }
                 else
                 {
                     res.ok = false;

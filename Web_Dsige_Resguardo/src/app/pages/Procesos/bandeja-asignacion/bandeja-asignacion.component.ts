@@ -149,7 +149,7 @@ inicializarFormularioDet(){
               if (res.ok==true) {     
                   if(res.data.length > 0){ 
                     this.solicitudesCab = res.data;
-                  }               
+                 }               
                 }else{
                 this.alertasService.Swal_alert('error', JSON.stringify(res.data));
                 alert(JSON.stringify(res.data));
@@ -340,9 +340,9 @@ inicializarFormularioDet(){
   }
 
    anular(objBD:any){ 
-    if (objBD.idEstado === 10 || objBD.idEstado =='10' || objBD.idEstado ===11 || objBD.idEstado =='11') {      
-      return;      
-    }
+    // if (objBD.idEstado === 10 || objBD.idEstado =='10' || objBD.idEstado ===11 || objBD.idEstado =='11') {      
+    //   return;      
+    // }
  
     this.alertasService.Swal_Question('Sistemas', 'Esta seguro de anular ?')
     .then((result)=>{
@@ -350,17 +350,18 @@ inicializarFormularioDet(){
  
         Swal.fire({  icon: 'info', allowOutsideClick: false, allowEscapeKey: false, text: 'Espere por favor'  })
         Swal.showLoading();
-        this.solicitudResguardoService.set_anular(objBD.id_Solicitud_Cab ).subscribe((res:RespuestaServer)=>{
-          Swal.close();        
-          if (res.ok ==true) { 
-            
-            for (const sol of this.solicitudesCab) {
-              if (sol.id_Solicitud_Cab == objBD.id_Solicitud_Cab ) {               
-                sol.idEstado = 11;
-                sol.descripcion_estado =  "ANULADO" ;
-                break;
-              }
-            }
+        this.solicitudResguardoService.set_anularBandejaAtencion(objBD.id_Solicitud_Cab, this.idUserGlobal ).subscribe((res:RespuestaServer)=>{
+          Swal.close();
+  
+          if (res.ok ==true) {             
+            // for (const sol of this.solicitudesCab) {
+            //   if (sol.id_Solicitud_Cab == objBD.id_Solicitud_Cab ) {               
+            //     sol.idEstado = 11;
+            //     sol.descripcion_estado =  "ANULADO" ;
+            //     break;
+            //   }
+            // }
+            this.mostrarInformacion();
             this.alertasService.Swal_Success('Se anulo correctamente..')  
  
           }else{

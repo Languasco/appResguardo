@@ -84,6 +84,7 @@ export class TareoComponent implements OnInit {
     this.tareoService.get_mostrarTareoCab(this.formParamsFiltro.value.Codservicio ,fechaIni, fechaFin)
         .subscribe((res:RespuestaServer)=>{            
             this.spinner.hide();
+            console.log(res)
             if (res.ok==true) {        
                 this.tareoCab = res.data;  
              }else{

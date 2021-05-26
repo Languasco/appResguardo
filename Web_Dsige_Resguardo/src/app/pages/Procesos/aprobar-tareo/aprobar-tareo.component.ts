@@ -24,15 +24,22 @@ declare const $: any;
 export class AprobarTareoComponent implements OnInit {
 
   formParamsFiltro : FormGroup;
+  formParams : FormGroup;
   formParamsDatosG : FormGroup;  
+  formParamsRechazo : FormGroup;  
 
   idUserGlobal :number = 0;
   tareoCab :any[]=[];  
   servicios :any[]=[];   
+  efectivos  :any[]=[];   
+
   filtrarMantenimiento = "";
-  checkeadoAll =false;
-  fotosDetalle :any[]=[]; 
-  idParteDiario_Global =0 ;
+  checkeadoAll = false ;
+  fotosDetalle : any[]=[] ; 
+  idParteDiario_Global = 0 ;
+
+  objetoParteDiario_global : any = {};
+  tipoOpcion = '' ;
 
   @ViewChild('htmlData', {static: false}) htmlData: ElementRef;
   
@@ -42,6 +49,8 @@ export class AprobarTareoComponent implements OnInit {
 
   ngOnInit(): void {
     this.inicializarFormularioFiltro()
+    this.inicializarFormularioMantenimiento();
+    this.inicializarFormularioRechazo();
     this.getCargarCombos();
   }
 
@@ -51,13 +60,29 @@ export class AprobarTareoComponent implements OnInit {
       Codservicio : new FormControl('0'),
       fecha_ini : new FormControl(new Date()),
       fecha_fin : new FormControl(new Date()), 
+    }) 
+  }
+
+  inicializarFormularioMantenimiento(){ 
+    this.formParams= new FormGroup({
+      idEfectivo : new FormControl('0'),
+      horaIni : new FormControl('07'),
+      minIni : new FormControl('30'),
+      horaFin : new FormControl('12'),
+      minFin : new FormControl('30'),
+    }) 
+  }
+  inicializarFormularioRechazo(){ 
+    this.formParamsRechazo= new FormGroup({
+      descripcionRespuesta : new FormControl(''),
      }) 
- }
+  }
   
  getCargarCombos(){ 
   this.spinner.show();
-  combineLatest([ this.usuariosService.get_area() ]).subscribe( ([ _servicios ])=>{
+  combineLatest([ this.usuariosService.get_area(), this.usuariosService.get_efectivosPoliciales() ]).subscribe( ([ _servicios, _efectivo ])=>{
     this.servicios = _servicios;
+    this.efectivos = _efectivo;
     this.spinner.hide(); 
   },(error)=>{
     this.spinner.hide(); 
@@ -276,13 +301,17 @@ export class AprobarTareoComponent implements OnInit {
     if(result.value){
       Swal.fire({  icon: 'info', allowOutsideClick: false, allowEscapeKey: false, text: 'Actualizando, espere por favor'  })
       Swal.showLoading();
-      this.tareoService.set_aprobarRechazarTareo( objTareo.id_ParteDiario, opcion, this.idUserGlobal ).subscribe((res:RespuestaServer)=>{
+      this.tareoService.set_aprobarRechazarTareo( objTareo.id_ParteDiario, opcion, this.idUserGlobal ,  this.formParamsRechazo.value.descripcionRespuesta).subscribe((res:RespuestaServer)=>{
         Swal.close(); 
         if (res.ok ==true) {  
 
           this.alertasService.Swal_Success('Proceso realizado correctamente..');
           var index = this.tareoCab.indexOf( objTareo );
           this.tareoCab.splice( index, 1 );  
+
+          if (opcion =='R') {
+            this.cerrarModalAprobar();
+          }
 
         }else{
           this.alertasService.Swal_alert('error', JSON.stringify(res.data));
@@ -296,66 +325,64 @@ export class AprobarTareoComponent implements OnInit {
 
 
  validacionCheckMarcado(){    
-  let CheckMarcado = false;
-  CheckMarcado = this.funcionGlobalServices.verificarCheck_marcado(this.tareoCab);
-
-  if (CheckMarcado ==false) {
-    this.alertasService.Swal_alert('error','Por favor debe marcar un elemento de la Tabla');
-    return false;
-  }else{
-    return true;
-  }
-}
-
- async aprobarRechazarTareo_masivo(opcion:string){ 
-
-  if (this.validacionCheckMarcado()==false){
-    return;
-  } 
-
- 
-
-  let parteDiario = this.tareoCab.filter( ot => ot.checkeado &&  ( ot.idEstado == 7 )); 
-  const codigosIdParteDiario = this.funcionGlobalServices.obtenerCheck_IdPrincipal(parteDiario,'id_ParteDiario'); 
-
-   if ( parteDiario.length ==0 ) {
-      this.alertasService.Swal_alert('error','Solo se pueden procesar con estado Recepcion de Parte Diario');
-      return;
-   } 
- 
-  let mens = (opcion =='A') ? 'Esta seguro de Aprobar ?' : 'Esta seguro de Rechazar ?';
-
-  if (opcion =='A') {
-    mens = 'Esta seguro de Aprobar ?';
-  }
-  if (opcion =='R') {
-    mens = 'Esta seguro de Rechazar ?';
-  }
-  if (opcion =='O') {
-    mens = 'Esta seguro de Observar ?';
-  }
- 
-  this.alertasService.Swal_Question('Sistemas', mens)
-  .then((result)=>{
-    if(result.value){
-      Swal.fire({  icon: 'info', allowOutsideClick: false, allowEscapeKey: false, text: 'Actualizando, espere por favor'  })
-      Swal.showLoading();
-      this.tareoService.set_aprobarRechazarTareo_masivo( codigosIdParteDiario.join(), opcion, this.idUserGlobal ).subscribe((res:RespuestaServer)=>{
-        Swal.close(); 
-        if (res.ok ==true) {  
-
-          this.alertasService.Swal_Success('Proceso realizado correctamente..');
-          this.mostrarInformacion();
-
-        }else{
-          this.alertasService.Swal_alert('error', JSON.stringify(res.data));
-          alert(JSON.stringify(res.data));
-        }
-      })
+    let CheckMarcado = false;
+    CheckMarcado = this.funcionGlobalServices.verificarCheck_marcado(this.tareoCab);
+  
+    if (CheckMarcado ==false) {
+      this.alertasService.Swal_alert('error','Por favor debe marcar un elemento de la Tabla');
+      return false;
+    }else{
+      return true;
     }
-  })  
+ }
 
-  } 
+//  async aprobarRechazarTareo_masivo(opcion:string){ 
+
+//   if (this.validacionCheckMarcado()==false){
+//     return;
+//   }  
+
+//   let parteDiario = this.tareoCab.filter( ot => ot.checkeado &&  ( ot.idEstado == 7 )); 
+//   const codigosIdParteDiario = this.funcionGlobalServices.obtenerCheck_IdPrincipal(parteDiario,'id_ParteDiario'); 
+
+//    if ( parteDiario.length ==0 ) {
+//       this.alertasService.Swal_alert('error','Solo se pueden procesar con estado Recepcion de Parte Diario');
+//       return;
+//    } 
+ 
+//   let mens = (opcion =='A') ? 'Esta seguro de Aprobar ?' : 'Esta seguro de Rechazar ?';
+
+//   if (opcion =='A') {
+//     mens = 'Esta seguro de Aprobar ?';
+//   }
+//   if (opcion =='R') {
+//     mens = 'Esta seguro de Rechazar ?';
+//   }
+//   if (opcion =='O') {
+//     mens = 'Esta seguro de Observar ?';
+//   }
+ 
+//   this.alertasService.Swal_Question('Sistemas', mens)
+//   .then((result)=>{
+//     if(result.value){
+//       Swal.fire({  icon: 'info', allowOutsideClick: false, allowEscapeKey: false, text: 'Actualizando, espere por favor'  })
+//       Swal.showLoading();
+//       this.tareoService.set_aprobarRechazarTareo_masivo( codigosIdParteDiario.join(), opcion, this.idUserGlobal ).subscribe((res:RespuestaServer)=>{
+//         Swal.close(); 
+//         if (res.ok ==true) {  
+
+//           this.alertasService.Swal_Success('Proceso realizado correctamente..');
+//           this.mostrarInformacion();
+
+//         }else{
+//           this.alertasService.Swal_alert('error', JSON.stringify(res.data));
+//           alert(JSON.stringify(res.data));
+//         }
+//       })
+//     }
+//   })  
+
+//  } 
   
      
   cerrarModal_visor(){
@@ -437,8 +464,175 @@ export class AprobarTareoComponent implements OnInit {
   
   }
  
+     
+  cerrarModal_editar(){
+    $('#modal_editar').modal('hide');    
+  }
+
+  openModal_mantenimiento(objParteDiario:any){
+    setTimeout(()=>{ // 
+      $('#modal_editar').modal('show');
+    },0);
+
+    this.idParteDiario_Global = objParteDiario.id_ParteDiario;
+
+    if (objParteDiario.horaInicio == ''  || objParteDiario.horaInicio == null || objParteDiario.horaInicio == undefined  ) {
+      this.formParams.patchValue({ "idEfectivo" : objParteDiario.id_UsuarioEfectivoPolicial , "horaIni" : null , "minIni" : null });
+    }else{
+      const tiempoInicial = objParteDiario.horaInicio.split(":");
+      const minIni = tiempoInicial[1].slice(0,2).trim();
+
+      this.formParams.patchValue({ "idEfectivo" : objParteDiario.id_UsuarioEfectivoPolicial , "horaIni" : tiempoInicial[0]  , "minIni" : minIni  });
+    }
+    
+    if (objParteDiario.horaTermino == ''  || objParteDiario.horaTermino == null || objParteDiario.horaTermino == undefined  ) {
+      this.formParams.patchValue({ "idEfectivo" : objParteDiario.id_UsuarioEfectivoPolicial , "horaFin" : null  , "minFin" : null   });
+    }else{
+      const tiempoFinal = objParteDiario.horaTermino.split(":");
+      const minFin = tiempoFinal[1].slice(0,2).trim();
+      
+      this.formParams.patchValue({ "idEfectivo" : objParteDiario.id_UsuarioEfectivoPolicial , "horaFin" : tiempoFinal[0]  , "minFin" : minFin   });
+    }
+
+  }
+
+  actualizarTareo(){
+
+    if (this.formParams.value.idEfectivo == '' || this.formParams.value.idEfectivo == 0) {
+      this.alertasService.Swal_alert('error','Por favor seleccione un efectivo policial');
+      return 
+    }
+    if (this.formParams.value.horaIni == '' || this.formParams.value.horaIni == null || this.formParams.value.horaIni == undefined ) {
+      this.alertasService.Swal_alert('error','Por favor seleccione la hora inicial');
+      return 
+    }
+    if (this.formParams.value.minIni == '' || this.formParams.value.minIni == null || this.formParams.value.minIni == undefined ) {
+      this.alertasService.Swal_alert('error','Por favor seleccione los minutos iniciales');
+      return 
+    }
+    if (this.formParams.value.horaFin == '' || this.formParams.value.horaFin == null || this.formParams.value.horaFin == undefined ) {
+      this.alertasService.Swal_alert('error','Por favor seleccione la hora de termino');
+      return 
+    }
+    if (this.formParams.value.minFin == '' || this.formParams.value.minFin == null || this.formParams.value.minFin == undefined ) {
+      this.alertasService.Swal_alert('error','Por favor seleccione los minutos de termino');
+      return 
+    }
+
+
+    let meridianIni = ( Number(this.formParams.value.horaIni) > 12  ) ? ' p.m.' :' a.m.'  ;
+    let meridianFin = ( Number(this.formParams.value.horaFin) > 12  ) ? ' p.m.' :' a.m.'  ;
+
+    let horaInicio = this.formParams.value.horaIni + ':' + this.formParams.value.minIni + meridianIni;  
+    let horaFinal = this.formParams.value.horaFin + ':' + this.formParams.value.minFin + meridianFin;  
+ 
+    Swal.fire({
+      icon: 'info', allowOutsideClick: false, allowEscapeKey: false, text: 'Obteniendo Fotos, Espere por favor'
+    })
+    Swal.showLoading();
+    this.tareoService.get_actualizarParteDiario( this.idParteDiario_Global , this.formParams.value.idEfectivo, horaInicio,  horaFinal,  this.idUserGlobal).subscribe((res:RespuestaServer)=>{
+      Swal.close();
+      if (res.ok) {         
+
+         this.mostrarInformacion();
+         this.alertasService.Swal_Success('Proceso realizado correctamente..');
+         this.cerrarModal_editar();      
+         
+      }else{
+        this.alertasService.Swal_alert('error', JSON.stringify(res.data));
+        alert(JSON.stringify(res.data));
+      }      
+     })
+  }
+
+
+  cerrarModalAprobar(){
+    setTimeout(()=>{ // 
+      $('#modal_aprobacion').modal('hide');  
+    },0); 
+  }
+
+
+  
+  open_modalRechazar(objTareo : any){    
+    if (objTareo.idEstado != 7 ) {
+      this.alertasService.Swal_alert('error','Solo se pueden procesar con estado Recepcion de Parte Diario');
+      return;
+    }
+    this.objetoParteDiario_global = objTareo;
+    this.tipoOpcion = 'NORMAL';
+    this.formParamsRechazo.patchValue({ "descripcionRespuesta" : '' });
+
+    setTimeout(()=>{ // 
+      $('#modal_aprobacion').modal('show');  
+    },0)
+  }
+
+  guardarRechazo(){
+
+    if ( this.tipoOpcion == 'NORMAL') {
+      this.aprobarRechazarTareo( 'R', this.objetoParteDiario_global );
+    }
+    if ( this.tipoOpcion == 'MASIVO') {
+      this.aprobarRechazarTareo_masivo('R');
+    }
+
+  }
+
+  
+ async aprobarRechazarTareo_masivo(opcion:string){ 
+
+  if (this.validacionCheckMarcado()==false){
+    return;
+  }  
+
+  let parteDiario = this.tareoCab.filter( ot => ot.checkeado &&  ( ot.idEstado == 7 )); 
+  const codigosIdParteDiario = this.funcionGlobalServices.obtenerCheck_IdPrincipal(parteDiario,'id_ParteDiario'); 
+
+   if ( parteDiario.length ==0 ) {
+      this.alertasService.Swal_alert('error','Solo se pueden procesar con estado Recepcion de Parte Diario');
+      return;
+   } 
+ 
+  let mens = (opcion =='A') ? 'Esta seguro de Aprobar ?' : 'Esta seguro de Rechazar?';
+
+  if (opcion =='A') {
+    mens = 'Esta seguro de Aprobar ?';
+  }
+  if (opcion =='R') {
+    mens = 'Esta seguro de Rechazar ?';
+  }
+  if (opcion =='O') {
+    mens = 'Esta seguro de Observar ?';
+  }
+ 
+  this.alertasService.Swal_Question('Sistemas', mens)
+  .then((result)=>{
+    if(result.value){
+      Swal.fire({  icon: 'info', allowOutsideClick: false, allowEscapeKey: false, text: 'Actualizando, espere por favor'  })
+      Swal.showLoading();
+      this.tareoService.set_aprobarRechazarTareo_masivo( codigosIdParteDiario.join(), opcion, this.idUserGlobal,  this.formParamsRechazo.value.descripcionRespuesta ).subscribe((res:RespuestaServer)=>{
+        Swal.close(); 
+        if (res.ok ==true) {  
+
+          this.alertasService.Swal_Success('Proceso realizado correctamente..');
+          this.mostrarInformacion();
+          if (opcion =='R') {
+            this.cerrarModalAprobar();
+          }
+
+        }else{
+          this.alertasService.Swal_alert('error', JSON.stringify(res.data));
+          alert(JSON.stringify(res.data));
+        }
+      })
+    }
+  })  
+
+ } 
 
  
+
 
   
 

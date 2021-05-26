@@ -251,5 +251,13 @@ export class SolicitudResguardoService {
     return this.http.get( this.URL + 'tblSolicitud_Cab' , {params: parametros});
   }
 
+  set_anularBandejaAtencion(id_Solicitud_Cab : number, idusuario:number){
+    let parametros = new HttpParams();
+    parametros = parametros.append('opcion', '21');
+    parametros = parametros.append('filtro', String(id_Solicitud_Cab)  + '|' +  idusuario  );
+
+    return this.http.get( this.URL + 'tblSolicitud_Cab' , {params: parametros});
+  }
+
 
 }

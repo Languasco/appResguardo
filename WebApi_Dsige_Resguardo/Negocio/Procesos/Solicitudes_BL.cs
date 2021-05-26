@@ -772,7 +772,35 @@ namespace Negocio.Procesos
             return res;
         }
 
+        public object set_anularBandejaAtencion( int idSolCab ,int id_usuario)
+        {
+            Resultado res = new Resultado();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("DSIGE_PROY_W_BANDEJA_ASIGNACION_ANULAR", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idSolCab", SqlDbType.Int).Value = idSolCab;
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = id_usuario;
+                        cmd.ExecuteNonQuery();
 
-
+                        res.ok = true;
+                        res.data = "OK";
+                        res.totalpage = 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+               
     }
 }

@@ -1,6 +1,6 @@
 <div class="card border-left-warning  shadow   ">
     <div class="card-header">
-        <h5 class="headerTitle"> APROBACION DE TAREO </h5>
+        <h5 class="headerTitle"> APROBACIÓN DE TAREO </h5>
     </div>
     <div class="card-body">
 
@@ -27,6 +27,9 @@
                         <button class="btn btn-sm btn-warning ml-2  " (click)="descargarGrilla()" style="font-size: 13px;">  <i class="fa fa-download"> Exportar</i> </button>
                     </div>
                 </div>
+
+
+
             </div>
         </form>
 
@@ -55,6 +58,7 @@
                     </div>
                 </div>
 
+
                 <div class="search-results tableFixHead">
                     <table class="table  table-hover table-sm">
                         <thead class="theadTable">
@@ -64,6 +68,7 @@
                                 <th scope="col">#</th>
                                 <th class="text-center">Dia</th>
                                 <th class="text-center">Personal</th>
+                                <th class="text-center">Placa</th>
                                 <th class="text-center">JefeCuadrilla</th>
                                 <th class="text-center">Direccion</th>
                                 <th class="text-center">NroOrden</th>
@@ -76,7 +81,7 @@
                                 <th class="text-center">Precio</th>
                                 <th class="text-center">Total Soles</th>
                                 <th class="text-center">INCIDENCIAS</th>
-                                <th colspan="2" class="text-center">ACCIONES</th>
+                                <th colspan="3" class="text-center">ACCIONES</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -94,6 +99,7 @@
                                         {{item.personal}}
                                     </div>
                                 </td>
+                                <td>{{item.placa}}</td>
                                 <td>{{item.jefeCuadrilla}}</td>
                                 <td>
                                     <div style="width: 350px;">
@@ -110,13 +116,17 @@
                                 <td class="text-right">{{item.precio}}</td>
                                 <td class="text-right">{{item.totalSoles | number : '1.2-2' }}</td>
                                 <td class="text-center">
-                                    <span class="badge badge-primary puntero" style="padding: 5px;" (click)="abrirModal_visorFotos(item)">  Ver </span>
+                                    <span class="badge badge-dark puntero" style="padding: 5px;" (click)="abrirModal_visorFotos(item)">  Ver </span>
                                 </td>
                                 <td class="text-center">
                                     <span class="badge badge-success puntero" style="padding: 5px;" (click)="aprobarRechazarTareo('A',item)">  Aprobar </span>
                                 </td>
                                 <td class="text-center">
-                                    <span class="badge badge-danger puntero" style="padding: 5px;" (click)="aprobarRechazarTareo('R',item)">  Rechazar </span>
+                                    <!-- <span class="badge badge-danger puntero" style="padding: 5px;" (click)="aprobarRechazarTareo('R',item)">  Rechazar </span> -->
+                                    <span class="badge badge-danger puntero" style="padding: 5px;" (click)="open_modalRechazar(item)">  Rechazar </span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge badge-primary puntero" style="padding: 5px;" (click)="openModal_mantenimiento(item)">  Editar </span>
                                 </td>
                             </tr>
                         </tbody>
@@ -180,6 +190,312 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade " id="modal_editar" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel  " aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-scrollable " role="document">
+        <div class="modal-content">
+            <div class="p-3 card ">
+                <div class="d-flex justify-content-between flotante">
+                    <div class=" bd-highlight">
+                        <i class="fas fa-arrow-circle-left  fa-2x puntero" title="Retornar" (click)="cerrarModal_editar()">  </i>
+                    </div>
+                    <div class=" bd-highlight">
+                        <h5 class="tituloModal" style="color: black;"> EDITAR </h5>
+                    </div>
+                    <div class=" bd-highlight">
+                        <i class="far fa-times-circle fa-2x puntero" title="Retornar" (click)="cerrarModal_editar()">  </i>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+
+                <form [formGroup]="formParams">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for=""> Efectivo Policial </label>
+                            <select class="form-control comboBox" formControlName="idEfectivo">
+                                <option value="0"> [ -- SELECCIONE -- ]</option>
+                                <option [value]="tipo.id_efectivo" *ngFor="let tipo of efectivos">{{tipo.efectivo}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="control-label"> Hora Inicial (Hora-Minutos) </label>
+                            <div class="input-group">
+
+                                <select class="form-control comboBox" formControlName="horaIni">
+                                     <option value="01"> 01</option>
+                                    <option value="02"> 02</option>
+                                    <option value="03"> 03</option>
+                                    <option value="04"> 04</option>
+                                    <option value="05"> 05</option>
+                                    <option value="06"> 06</option>
+                                    <option value="07"> 07</option>
+                                    <option value="08"> 08</option>
+                                    <option value="09"> 09</option>
+                                    <option value="10"> 10</option>
+                                    <option value="11"> 11</option>
+                                    <option value="12"> 12</option>
+                                    <option value="13"> 13</option>
+                                    <option value="14"> 14</option>
+                                    <option value="15"> 15</option>
+                                    <option value="16"> 16</option>
+                                    <option value="17"> 17</option>
+                                    <option value="18"> 18</option>
+                                    <option value="19"> 19 </option>
+                                    <option value="20"> 20 </option>
+                                    <option value="21"> 21 </option>
+                                    <option value="22"> 22 </option>
+                                    <option value="23"> 23 </option>
+                                    <option value="24"> 24</option> 
+                                </select>
+
+                                <span class="input-group-addon" style=" margin-left: 5px;margin-right: 5px;">  :  </span>
+
+                                <select class="form-control comboBox" formControlName="minIni">
+                                    <option value="00"> 00</option>
+                                    <option value="01"> 01</option>
+                                    <option value="02"> 02</option>
+                                    <option value="03"> 03</option>
+                                    <option value="04"> 04</option>
+                                    <option value="05"> 05</option>
+                                    <option value="06"> 06</option>
+                                    <option value="07"> 07</option>
+                                    <option value="08"> 08</option>
+                                    <option value="09"> 09</option>
+                                    <option value="10"> 10</option>
+                                    <option value="11"> 11</option>
+                                    <option value="12"> 12</option>
+                                    <option value="13"> 13</option>
+                                    <option value="14"> 14</option>
+                                    <option value="15"> 15</option>
+                                    <option value="16"> 16</option>
+                                    <option value="17"> 17</option>
+                                    <option value="18"> 18</option>
+                                    <option value="19"> 19 </option>
+                                    <option value="20"> 20 </option>
+                                    <option value="21"> 21 </option>
+                                    <option value="22"> 22 </option>
+                                    <option value="23"> 23 </option>
+                                    <option value="24"> 24</option> 
+                                    
+                                   <option value="25"> 25 </option> 
+                                   <option value="26"> 26 </option> 
+                                   <option value="27"> 27 </option> 
+                                   <option value="28"> 28 </option> 
+                                   <option value="29"> 29 </option> 
+                                   <option value="30"> 30 </option> 
+                                   <option value="31"> 31 </option> 
+                                   <option value="32"> 32 </option> 
+                                   <option value="33"> 33 </option> 
+                                   <option value="34"> 34 </option> 
+                                   <option value="35"> 35 </option> 
+                                   <option value="36"> 36 </option> 
+                                   <option value="37"> 37 </option> 
+                                   <option value="38"> 38 </option> 
+                                   <option value="39"> 39 </option> 
+                                   <option value="40"> 40 </option> 
+                                   
+                                   <option value="41"> 41 </option> 
+                                   <option value="42"> 42 </option> 
+                                   <option value="43"> 43 </option> 
+                                   <option value="44"> 44 </option> 
+                                   <option value="45"> 45 </option> 
+                                   <option value="46"> 46 </option> 
+                                   <option value="47"> 47 </option> 
+                                   <option value="48"> 48 </option> 
+                                   <option value="49"> 49 </option> 
+                                   <option value="50"> 50 </option> 
+                                   
+                                   <option value="51"> 51 </option> 
+                                   <option value="52"> 52 </option> 
+                                   <option value="53"> 53 </option> 
+                                   <option value="54"> 54 </option> 
+                                   <option value="55"> 55 </option> 
+                                   <option value="56"> 56 </option> 
+                                   <option value="57"> 57 </option> 
+                                   <option value="58"> 58 </option> 
+                                   <option value="59"> 59 </option> 
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="control-label"> Hora Termino (Hora-Minutos) </label>
+                            <div class="input-group">
+                                <select class="form-control comboBox" formControlName="horaFin">
+                                    <option value="01"> 01</option>
+                                    <option value="02"> 02</option>
+                                    <option value="03"> 03</option>
+                                    <option value="04"> 04</option>
+                                    <option value="05"> 05</option>
+                                    <option value="06"> 06</option>
+                                    <option value="07"> 07</option>
+                                    <option value="08"> 08</option>
+                                    <option value="09"> 09</option>
+                                    <option value="10"> 10</option>
+                                    <option value="11"> 11</option>
+                                    <option value="12"> 12</option>
+                                    <option value="13"> 13</option>
+                                    <option value="14"> 14</option>
+                                    <option value="15"> 15</option>
+                                    <option value="16"> 16</option>
+                                    <option value="17"> 17</option>
+                                    <option value="18"> 18</option>
+                                    <option value="19"> 19 </option>
+                                    <option value="20"> 20 </option>
+                                    <option value="21"> 21 </option>
+                                    <option value="22"> 22 </option>
+                                    <option value="23"> 23 </option>
+                                    <option value="24"> 24</option> 
+                                </select>
+
+                                <span class="input-group-addon" style=" margin-left: 5px;margin-right: 5px;"> : </span>
+
+                                <select class="form-control comboBox" formControlName="minFin">
+                                    <option value="00"> 00</option>
+                                    <option value="01"> 01</option>
+                                    <option value="02"> 02</option>
+                                    <option value="03"> 03</option>
+                                    <option value="04"> 04</option>
+                                    <option value="05"> 05</option>
+                                    <option value="06"> 06</option>
+                                    <option value="07"> 07</option>
+                                    <option value="08"> 08</option>
+                                    <option value="09"> 09</option>
+                                    <option value="10"> 10</option>
+                                    <option value="11"> 11</option>
+                                    <option value="12"> 12</option>
+                                    <option value="13"> 13</option>
+                                    <option value="14"> 14</option>
+                                    <option value="15"> 15</option>
+                                    <option value="16"> 16</option>
+                                    <option value="17"> 17</option>
+                                    <option value="18"> 18</option>
+                                    <option value="19"> 19 </option>
+                                    <option value="20"> 20 </option>
+                                    <option value="21"> 21 </option>
+                                    <option value="22"> 22 </option>
+                                    <option value="23"> 23 </option>
+                                    <option value="24"> 24</option> 
+                                    
+                                   <option value="25"> 25 </option> 
+                                   <option value="26"> 26 </option> 
+                                   <option value="27"> 27 </option> 
+                                   <option value="28"> 28 </option> 
+                                   <option value="29"> 29 </option> 
+                                   <option value="30"> 30 </option> 
+                                   <option value="31"> 31 </option> 
+                                   <option value="32"> 32 </option> 
+                                   <option value="33"> 33 </option> 
+                                   <option value="34"> 34 </option> 
+                                   <option value="35"> 35 </option> 
+                                   <option value="36"> 36 </option> 
+                                   <option value="37"> 37 </option> 
+                                   <option value="38"> 38 </option> 
+                                   <option value="39"> 39 </option> 
+                                   <option value="40"> 40 </option> 
+                                   
+                                   <option value="41"> 41 </option> 
+                                   <option value="42"> 42 </option> 
+                                   <option value="43"> 43 </option> 
+                                   <option value="44"> 44 </option> 
+                                   <option value="45"> 45 </option> 
+                                   <option value="46"> 46 </option> 
+                                   <option value="47"> 47 </option> 
+                                   <option value="48"> 48 </option> 
+                                   <option value="49"> 49 </option> 
+                                   <option value="50"> 50 </option> 
+                                   
+                                   <option value="51"> 51 </option> 
+                                   <option value="52"> 52 </option> 
+                                   <option value="53"> 53 </option> 
+                                   <option value="54"> 54 </option> 
+                                   <option value="55"> 55 </option> 
+                                   <option value="56"> 56 </option> 
+                                   <option value="57"> 57 </option> 
+                                   <option value="58"> 58 </option> 
+                                   <option value="59"> 59 </option> 
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row mt-2">
+                        <div class="col-md-12 text-center ">
+                            <button class="btn  btn-sm  btn-primary" (click)="actualizarTareo()" title="Guardar los datos">
+                                <i class="fas fa-save">  </i> Grabar
+                            </button>
+                        </div>
+                    </div>
+
+
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal_aprobacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="modal-content" style="    border-color: red;">
+            <div class="modal-header">
+                <div class="clearfix">
+                    <h1 class="modal-title float-right text-danger"> RECHAZAR </h1>
+                </div>
+
+                <button type="button" class="close" (click)="cerrarModalAprobar()" aria-label="Close">  <span aria-hidden="true">&times;</span>     </button>
+            </div>
+            <div class="modal-body">
+
+                <form [formGroup]="formParamsRechazo" style=" margin-top: -15px;">
+                    <fieldset class="shadow-sm mt-2">
+                        <legend>DETALLE</legend>
+                        <div class="panel panel-default ">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label> Observacion </label>
+                                                <textarea class="form-control" style="background: rgb(253, 253, 120);; color: black; font-weight: 600;font-size: 13px;" maxlength="255" formControlName="descripcionRespuesta" rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+
+                <div class="d-flex justify-content-center">
+                    <div class="p-2 bd-highlight">
+                        <button class="btn btn-outline-danger ml-2" title="Aceptar" (click)="guardarRechazo()"> <i class="fas fa-window-close"> Aceptar </i></button>
+                    </div>
+                </div>
+
             </div>
 
         </div>

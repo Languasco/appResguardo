@@ -111,6 +111,9 @@ namespace Entidades.Reportes
         public string urlFirmaJefeCuadrillaReporte { get; set; }
         public string idEstado { get; set; }
         public string descripcionEstado { get; set; }
+        public string id_UsuarioEfectivoPolicial { get; set; }
+        public string comentario { get; set; }
+        public string placa { get; set; }
 
     }
 

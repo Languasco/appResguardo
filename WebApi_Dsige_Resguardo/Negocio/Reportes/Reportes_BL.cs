@@ -737,6 +737,8 @@ namespace Negocio.Reportes
                                 Entidad.urlFirmaEfectivoReporte = dr["urlFirmaEfectivoReporte"].ToString();
                                 Entidad.urlFirmaJefeCuadrillaReporte = dr["urlFirmaJefeCuadrillaReporte"].ToString();
                                 Entidad.descripcionEstado = dr["descripcionEstado"].ToString();
+                                Entidad.comentario = dr["comentario"].ToString();
+                                Entidad.placa = dr["placa"].ToString();
 
                                 obj_List.Add(Entidad);
                             }
@@ -792,6 +794,8 @@ namespace Negocio.Reportes
                                 Entidad.precio = dr["precio"].ToString();
                                 Entidad.totalSoles = dr["totalSoles"].ToString();
                                 Entidad.descripcionEstado = dr["descripcionEstado"].ToString();
+                                Entidad.comentario = dr["comentario"].ToString();
+                                Entidad.placa = dr["placa"].ToString();
 
                                 obj_List.Add(Entidad);
                             }
@@ -874,25 +878,26 @@ namespace Negocio.Reportes
 
                     oWs.Cells[1, 1].Style.Font.Size = 24; //letra tamaño  2
                     oWs.Cells[1, 1].Value = "TAREO DE EFECTIVO POLICIAL";
-                    oWs.Cells[1, 1, 1, 11].Merge = true;  // combinar celdaS
+                    oWs.Cells[1, 1, 1, 13].Merge = true;  // combinar celdaS
 
 
                     oWs.Cells[3, 1].Value = "FECHA : " + fechaIni + " al " + fechaFin;
                     oWs.Cells[4, 1].Value = "AREA : " + areas;
-
-
+                    
                     oWs.Cells[6, 1].Value = "ITEM";
                     oWs.Cells[6, 2].Value = "DIA";
                     oWs.Cells[6, 3].Value = "PERSONAL";
-                    oWs.Cells[6, 4].Value = "JEFE CUADRILLA";
-                    oWs.Cells[6, 5].Value = "DIRECCION";
-                    oWs.Cells[6, 6].Value = "NRO ORDEN ";
-                    oWs.Cells[6, 7].Value = "HORA INICIO";
-                    oWs.Cells[6, 8].Value = "HORA TERMINO ";
-                    oWs.Cells[6, 9].Value = "TOTAL HORAS";
-                    oWs.Cells[6, 10].Value = "PRECIO";
-                    oWs.Cells[6, 11].Value = "TOTAL SOLES";
-                    oWs.Cells[6, 12].Value = "ESTADO";
+                    oWs.Cells[6, 4].Value = "PLACA";
+                    oWs.Cells[6, 5].Value = "JEFE CUADRILLA";
+                    oWs.Cells[6, 6].Value = "DIRECCION";
+                    oWs.Cells[6, 7].Value = "NRO ORDEN ";
+                    oWs.Cells[6, 8].Value = "HORA INICIO";
+                    oWs.Cells[6, 9].Value = "HORA TERMINO ";
+                    oWs.Cells[6, 10].Value = "TOTAL HORAS";
+                    oWs.Cells[6, 11].Value = "PRECIO";
+                    oWs.Cells[6, 12].Value = "TOTAL SOLES";
+                    oWs.Cells[6, 13].Value = "ESTADO";
+                    oWs.Cells[6, 14].Value = "COMENTARIO";
 
                     int cont = 0;
                     foreach (var item in listDetalle)
@@ -901,26 +906,28 @@ namespace Negocio.Reportes
                         oWs.Cells[_fila, 1].Value = cont;
                         oWs.Cells[_fila, 2].Value = item.dia.ToString();
                         oWs.Cells[_fila, 3].Value = item.personal.ToString();
-                        oWs.Cells[_fila, 4].Value = item.jefeCuadrilla.ToString();
-                        oWs.Cells[_fila, 5].Value = item.direccion.ToString();
+                        oWs.Cells[_fila, 4].Value = item.placa.ToString();
+                        oWs.Cells[_fila, 5].Value = item.jefeCuadrilla.ToString();
+                        oWs.Cells[_fila, 6].Value = item.direccion.ToString();
 
-                        oWs.Cells[_fila, 6].Value = item.nroOrden.ToString();
-                        oWs.Cells[_fila, 7].Value = item.horaInicio.ToString();
-                        oWs.Cells[_fila, 8].Value = item.horaTermino.ToString();
+                        oWs.Cells[_fila, 7].Value = item.nroOrden.ToString();
+                        oWs.Cells[_fila, 8].Value = item.horaInicio.ToString();
+                        oWs.Cells[_fila, 9].Value = item.horaTermino.ToString();
                                                
-                        oWs.Cells[_fila, 9].Style.Numberformat.Format = "#,##0.00";
-                        oWs.Cells[_fila, 9].Value = Convert.ToDouble(item.totalHoras.ToString());   
-                        oWs.Cells[_fila, 9].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Right;
-
                         oWs.Cells[_fila, 10].Style.Numberformat.Format = "#,##0.00";
-                        oWs.Cells[_fila, 10].Value = Convert.ToDouble(item.precio.ToString());   
+                        oWs.Cells[_fila, 10].Value = Convert.ToDouble(item.totalHoras.ToString());   
                         oWs.Cells[_fila, 10].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Right;
-                        
-                        oWs.Cells[_fila, 11].Style.Numberformat.Format = "#,##0.00";
-                        oWs.Cells[_fila, 11].Value = Convert.ToDouble(item.totalSoles.ToString());
-                        oWs.Cells[_fila, 11].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Right;
 
-                        oWs.Cells[_fila, 12].Value = item.descripcionEstado.ToString();
+                        oWs.Cells[_fila, 11].Style.Numberformat.Format = "#,##0.00";
+                        oWs.Cells[_fila, 11].Value = Convert.ToDouble(item.precio.ToString());   
+                        oWs.Cells[_fila, 11].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Right;
+                        
+                        oWs.Cells[_fila, 12].Style.Numberformat.Format = "#,##0.00";
+                        oWs.Cells[_fila, 12].Value = Convert.ToDouble(item.totalSoles.ToString());
+                        oWs.Cells[_fila, 12].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Right;
+
+                        oWs.Cells[_fila, 13].Value = item.descripcionEstado.ToString();
+                        oWs.Cells[_fila, 14].Value = item.comentario.ToString();
                         _fila++;
                     }
 
@@ -932,7 +939,7 @@ namespace Negocio.Reportes
                     oWs.Row(6).Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Center;
                     oWs.Row(6).Style.VerticalAlignment = Style.ExcelVerticalAlignment.Center;
 
-                    for (int k = 1; k <= 11; k++)
+                    for (int k = 1; k <= 14; k++)
                     {
                         oWs.Column(k).AutoFit();
                     }
@@ -998,7 +1005,8 @@ namespace Negocio.Reportes
                                 Entidad.urlFirmaEfectivoReporte = dr["urlFirmaEfectivoReporte"].ToString();
                                 Entidad.urlFirmaJefeCuadrillaReporte = dr["urlFirmaJefeCuadrillaReporte"].ToString();
                                 Entidad.idEstado = dr["idEstado"].ToString();
-                                
+                                Entidad.id_UsuarioEfectivoPolicial = dr["id_UsuarioEfectivoPolicial"].ToString();
+                                Entidad.placa = dr["placa"].ToString();
 
 
                                 obj_List.Add(Entidad);
@@ -1052,7 +1060,7 @@ namespace Negocio.Reportes
             return res;
         }
                
-        public object set_aprobarRechazarTareo_masivo(string id_ParteDiario_masivo, string opcionEstado, int idUsuario)
+        public object set_aprobarRechazarTareo_masivo(string id_ParteDiario_masivo, string opcionEstado, int idUsuario, string observacion)
         {
             Resultado res = new Resultado();
             try
@@ -1067,6 +1075,7 @@ namespace Negocio.Reportes
                         cmd.Parameters.Add("@idParteDiario_masivo", SqlDbType.VarChar).Value = id_ParteDiario_masivo;
                         cmd.Parameters.Add("@opcionEstado", SqlDbType.VarChar).Value = opcionEstado;
                         cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+                        cmd.Parameters.Add("@observacion", SqlDbType.VarChar).Value = observacion;
                         cmd.ExecuteNonQuery();
 
                         res.ok = true;
@@ -1256,6 +1265,43 @@ namespace Negocio.Reportes
                 throw ex;
             }
             return resultado;
+        }
+
+
+
+        public object set_actualizarParteDiario(int idParteDiario, int  idEfectivo,string horaInicio, string horaFinal, int idUsuario)
+        {
+            Resultado res = new Resultado();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("DSIGE_PROY_W_APROBAR_TAREO_ACTUALIZAR", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idParteDiario", SqlDbType.Int).Value = idParteDiario;
+                        cmd.Parameters.Add("@idEfectivo", SqlDbType.Int).Value = idEfectivo;
+                        cmd.Parameters.Add("@horaInicio", SqlDbType.VarChar).Value = horaInicio;
+
+                        cmd.Parameters.Add("@horaFinal", SqlDbType.VarChar).Value = horaFinal;
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+                        cmd.ExecuteNonQuery();
+
+                        res.ok = true;
+                        res.data = "OK";
+                        res.totalpage = 0;
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
         }
 
 

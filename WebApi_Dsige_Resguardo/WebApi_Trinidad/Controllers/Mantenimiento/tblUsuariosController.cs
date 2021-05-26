@@ -27,7 +27,7 @@ namespace WebApi_dsigeResguardo.Controllers.Mantenimiento
         }
 
 
-        public object Gettbl_Personal(int opcion, string filtro)
+        public object Gettbl_Usuarios(int opcion, string filtro)
         {
             Resultado res = new Resultado();
             Proveedor_BL obj_negocio = new Proveedor_BL();
@@ -323,6 +323,15 @@ namespace WebApi_dsigeResguardo.Controllers.Mantenimiento
 
                     res.ok = true;
                     res.data = obj_negocios.get_eventosPerfilMarcados(idOpciones, idPerfil);
+                    res.totalpage = 0;
+                    resul = res;
+                }
+                else if (opcion == 20)
+                {
+                    Usuarios_BL obj_negocios = new Usuarios_BL();
+
+                    res.ok = true;
+                    res.data = obj_negocios.get_efectivosPoliciales();
                     res.totalpage = 0;
                     resul = res;
                 }

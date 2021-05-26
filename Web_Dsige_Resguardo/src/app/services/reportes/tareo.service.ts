@@ -27,6 +27,8 @@ export class TareoService {
     let parametros = new HttpParams();
     parametros = parametros.append('opcion', '8');
     parametros = parametros.append('filtro', idServicio + '|' +  fecha_ini + '|' +  fecha_fin );
+
+    console.log(parametros)
     return this.http.get( this.URL + 'Reportes' , {params: parametros});
   }
 
@@ -57,17 +59,17 @@ export class TareoService {
     return this.http.get( this.URL + 'Reportes' , {params: parametros});
   }
 
-  set_aprobarRechazarTareo(id_ParteDiario:number , opcion:string , idUser:number){ 
+  set_aprobarRechazarTareo(id_ParteDiario:number , opcion:string , idUser:number , observacion : string ){ 
     let parametros = new HttpParams();
     parametros = parametros.append('opcion', '11');
-    parametros = parametros.append('filtro', id_ParteDiario + '|' +  opcion + '|' +  idUser );
+    parametros = parametros.append('filtro', id_ParteDiario + '|' +  opcion + '|' +  idUser  + '|' +  observacion  );
     return this.http.get( this.URL + 'Reportes' , {params: parametros});
   }
 
-  set_aprobarRechazarTareo_masivo(id_ParteDiario: string , opcion:string , idUser:number){ 
+  set_aprobarRechazarTareo_masivo(id_ParteDiario: string , opcion:string , idUser:number, observacion : string){ 
     let parametros = new HttpParams();
     parametros = parametros.append('opcion', '12');
-    parametros = parametros.append('filtro', id_ParteDiario + '|' +  opcion + '|' +  idUser );
+    parametros = parametros.append('filtro', id_ParteDiario + '|' +  opcion + '|' +  idUser  + '|' +  observacion );
     return this.http.get( this.URL + 'Reportes' , {params: parametros});
   }
 
@@ -91,6 +93,16 @@ export class TareoService {
     parametros = parametros.append('filtro', idParteDiario + '|' + idUsuario);
     return this.http.get( this.URL + 'Reportes' , {params: parametros})
   }
+
+  
+  get_actualizarParteDiario( id_ParteDiario:number, idEfectivo:number, horaInicio :string, horaFinal:string,  idUsuario :number){ 
+    let parametros = new HttpParams();
+    parametros = parametros.append('opcion', '16');
+    parametros = parametros.append('filtro',  id_ParteDiario + '|' + idEfectivo + '|' + horaInicio + '|' + horaFinal+ '|' + idUsuario  );
+    console.log(parametros)
+    return this.http.get( this.URL + 'Reportes' , {params: parametros})
+  }
+
 
 
 

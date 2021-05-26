@@ -123,7 +123,7 @@ namespace WebApi_dsigeResguardo.Controllers.Reporte
                     int idServicio = Convert.ToInt32(parametros[0].ToString());
                     string fechaIni = parametros[1].ToString();
                     string fechaFin = parametros[2].ToString();
-
+ 
                     resul = obj_negocio.get_tareoCab(idServicio, fechaIni, fechaFin);
                 }
                 else if (opcion == 9)
@@ -166,9 +166,9 @@ namespace WebApi_dsigeResguardo.Controllers.Reporte
                     string id_ParteDiario_masivo = parametros[0].ToString();
                     string opcionEstado = parametros[1].ToString();
                     int idUsuario = Convert.ToInt32(parametros[2].ToString());
+                    string observacion = parametros[3].ToString();                  
 
-
-                    resul = obj_negocio.set_aprobarRechazarTareo_masivo(id_ParteDiario_masivo, opcionEstado, idUsuario);
+                    resul = obj_negocio.set_aprobarRechazarTareo_masivo(id_ParteDiario_masivo, opcionEstado, idUsuario, observacion);
                 }
 
                 else if (opcion == 13)
@@ -203,6 +203,17 @@ namespace WebApi_dsigeResguardo.Controllers.Reporte
                     res.data = obj_negocio.get_descargar_fotosParteDiario(idParteDiario,idUsuario);
                     res.totalpage = 0;
                     resul = res;
+                }
+                else if (opcion == 16)
+                {
+                    string[] parametros = filtro.Split('|');
+                    int idParteDiario = Convert.ToInt32(parametros[0].ToString());
+                    int idEfectivo = Convert.ToInt32(parametros[1].ToString());
+                    string horaInicio = parametros[2].ToString();
+                    string horaFinal = parametros[3].ToString();
+                    int idUsuario = Convert.ToInt32(parametros[4].ToString());
+
+                    resul = obj_negocio.set_actualizarParteDiario(idParteDiario, idEfectivo, horaInicio, horaFinal, idUsuario);         
                 }
 
                 else
